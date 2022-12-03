@@ -87,8 +87,6 @@
     margin-top: 10px;
   }
   }
-  
-  /* 装飾 */
    
   *{
     box-sizing: border-box;
@@ -99,5 +97,3 @@
   body{
     margin: 20px;
   }
-
-/*ローディング*/
