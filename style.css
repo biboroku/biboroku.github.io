@@ -24,7 +24,7 @@
     margin: 10px;
     padding: 0;
   }
-.minmin { font-family: "Sawarabi Mincho"; }
+.minmin { font-family: "Sawarabi Mincho"; font-size: large;}
 .siro {
     background-color: #F4F5F7;
     border-radius: 5pt;
