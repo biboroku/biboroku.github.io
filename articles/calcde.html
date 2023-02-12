@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>微分方程式計算機</title>
+</head>
+<body>
+	<h1>微分方程式計算機</h1>
+	<p>微分方程式dy/dx = f(x, y)を入力してください。</p>
+	<p>y(0) = </p>
+	<input type="text" id="inputInitialValue">
+	<p>f(x, y) = </p>
+	<input type="text" id="inputFunction">
+	<button onclick="solve()">解く</button>
+	<p id="result"></p>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.js" integrity="sha512-lUqAb6UeA6UJH6UZlwBlyT9TmTfT28CmMV2pyaHdC39/LsFgOmZ+BjKs7sJweOQJlGArvg9XsjfodlT+JflDZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+		function solve() {
+			// 入力された微分方程式のパラメータを取得する
+			var initialValue = Number(document.getElementById("inputInitialValue").value);
+			var functionString = document.getElementById("inputFunction").value;
+
+			// 数学表記を math.js で使える形に変換する
+			var functionMath = math.parse(functionString);
+			var functionCompiled = functionMath.compile();
+
+			// dy/dx = f(x, y)の形にする
+			var dydx = function (x, y) {
+				return functionCompiled.evaluate({ x: x, y: y });
+			}
+
+			// 解く
+			var result = math.rungeKutta4(dydx, 0, initialValue, 10, 0.1);
+
+			// 結果を表示する
+			document.getElementById("result").innerHTML = "y(10) = " + result;
+		}
+	</script>
+</body>
+</html>
