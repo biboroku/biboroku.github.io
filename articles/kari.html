@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href="../style.css">
+    <title>僕の備忘録!!!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <script src="../main.js"></script>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="instagram.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>微分計算機</h1>
+            <p>変数をxとする陽関数f(x)を入力してください。</p>
+            <input type="text" id="inputFunction">
+            <button onclick="differentiate()">微分する</button>
+            <p id="result"></p>
+
+            <script>
+                function differentiate() {
+                    // 入力された関数の文字列を取得する
+                    var inputFunction = document.getElementById("inputFunction").value;
+
+                    // 入力された関数をxで微分する
+                    var derivative = math.derivative(inputFunction, 'x');
+
+                    // 結果を表示する
+                    document.getElementById("result").innerHTML = "f'(x) = " + derivative.toString();
+                }
+            </script>
+
+            <!-- math.jsライブラリを読み込む -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.3.2/math.js"></script>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
+</html>
