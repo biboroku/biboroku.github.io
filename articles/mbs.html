@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mandelbrot Set</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        // キャンバス要素を取得する
+        var canvas = document.getElementById("canvas");
+
+        // 描画コンテキストを取得する
+        var ctx = canvas.getContext("2d");
+
+        // キャンバスの幅と高さを設定する
+        canvas.width = 800;
+        canvas.height = 600;
+
+        // マンデルブロ集合の各点について計算する
+        for (var x = 0; x < canvas.width; x++) {
+            for (var y = 0; y < canvas.height; y++) {
+                var zx = 0;
+                var zy = 0;
+                var cx = (x - canvas.width / 2) * 4 / canvas.width;
+                var cy = (y - canvas.height / 2) * 4 / canvas.width;
+                var i = 0;
+                while (i < 100 && zx * zx + zy * zy < 4) {
+                    var tx = zx * zx - zy * zy + cx;
+                    zy = 2 * zx * zy + cy;
+                    zx = tx;
+                    i++;
+                }
+
+                // マンデルブロ集合に属する場合は、黒に塗りつぶす
+                if (i == 100) {
+                    ctx.fillStyle = "black";
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
