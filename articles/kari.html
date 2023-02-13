@@ -38,16 +38,17 @@
     </script>
   </head>
   <body onload="loadMessages()">
-    <h1>Web掲示板</h1>
+    <h1>Webメモ帳</h1>
+    ローカルストレージを利用したかんたんなメモ帳です.ブラウザを変えると見られなくなります.他人に見られることもありません.
     <div>
-      <label for="name">名前:</label>
+      <label for="name">件名:</label>
       <input type="text" id="name" />
     </div>
     <div>
-      <label for="message">メッセージ:</label>
+      <label for="message">内容:</label>
       <textarea id="message"></textarea>
     </div>
-    <button onclick="addMessage()">送信</button>
+    <button onclick="addMessage()">保存</button>
     <div id="board"></div>
   </body>
 </html>
