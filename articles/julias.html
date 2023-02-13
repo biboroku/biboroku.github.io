@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Julia Set</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        // キャンバス要素を取得する
+        var canvas = document.getElementById("canvas");
+
+        // 描画コンテキストを取得する
+        var ctx = canvas.getContext("2d");
+
+        // キャンバスの幅と高さを設定する
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        // パラメータを設定する
+        var c = { x: -0.8, y: 0.156 };
+        var zoom = 1;
+        var maxIter = 100;
+
+        // ジュリア集合の各点について計算する
+        for (var x = 0; x < canvas.width; x++) {
+            for (var y = 0; y < canvas.height; y++) {
+                var zx = (x - canvas.width / 2) / (0.5 * zoom * canvas.width);
+                var zy = (y - canvas.height / 2) / (0.5 * zoom * canvas.height);
+                var i = 0;
+                while (i < maxIter && zx * zx + zy * zy < 4) {
+                    var tx = zx * zx - zy * zy + c.x;
+                    zy = 2 * zx * zy + c.y;
+                    zx = tx;
+                    i++;
+                }
+
+                // ジュリア集合に属する場合は、黒に塗りつぶす
+                if (i == maxIter) {
+                    ctx.fillStyle = "black";
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
