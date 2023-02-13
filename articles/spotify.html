@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spotify Track Length</title>
+  </head>
+  <body>
+    <h1>Spotify Track Length</h1>
+    <label for="track-link">Enter Spotify Track Link:</label>
+    <input type="text" id="track-link">
+    <button onclick="getTrackLength()">Get Length</button>
+    <p id="track-length"></p>
+    
+    <script>
+      // Replace CLIENT_ID and CLIENT_SECRET with your own values
+      const CLIENT_ID = '102304c5c4a44521a28092362ddae4e1';
+      const CLIENT_SECRET = '93526d34561b4567a9b69d0557d42575';
+      const REDIRECT_URI = 'http://localhost:8888/callback';
+      
+      function getTrackLength() {
+        const trackLink = document.getElementById('track-link').value;
+        const trackId = trackLink.split('/').pop();
+        const endpoint = `https://api.spotify.com/v1/tracks/${trackId}`;
+        const authToken = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+        const request = new XMLHttpRequest();
+        request.open('GET', endpoint, true);
+        request.setRequestHeader('Authorization', `Basic ${authToken}`);
+        request.onreadystatechange = function() {
+          if (request.readyState === 4 && request.status === 200) {
+            const response = JSON.parse(request.responseText);
+            const trackLength = response.duration_ms / 1000;
+            document.getElementById('track-length').innerHTML = `Track Length: ${trackLength} seconds`;
+          }
+        };
+        request.send();
+      }
+    </script>
+  </body>
+</html>
