@@ -1,52 +1,52 @@
 <!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name=”robots” content=”noindex,nofollow”>
-    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
-    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-store">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <link rel="stylesheet" href="../style.css">
-    <title>僕の備忘録!!!</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
-    <script src="../main.js"></script>
-</head>
-
-<body>
-        <div class="gradientheader">
-            <header><a href="instagram.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
-        </div>
-        <div class="siro">
-            <h1>微分計算機</h1>
-            <p>変数をxとする陽関数f(x)を入力してください。</p>
-            <input type="text" id="inputFunction">
-            <button onclick="differentiate()">微分する</button>
-            <p id="result"></p>
-
-            <script>
-                function differentiate() {
-                    // 入力された関数の文字列を取得する
-                    var inputFunction = document.getElementById("inputFunction").value;
-
-                    // 入力された関数をxで微分する
-                    var derivative = math.derivative(inputFunction, 'x');
-
-                    // 結果を表示する
-                    document.getElementById("result").innerHTML = "f'(x) = " + derivative.toString();
-                }
-            </script>
-
-            <!-- math.jsライブラリを読み込む -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.3.2/math.js"></script>
-        </div>
-</body>
-<div class="gradientfooter">
-    <header>©僕の備忘録!!!-2023</header>
-</div>
+<html>
+  <head>
+    <title>関数電卓</title>
+    <link rel="stylesheet" type="text/css" href="calc.css">
+  </head>
+  <body>
+    <h1>関数電卓!!!</h1>
+    <div id="calculator">
+      <input type="text" id="output">
+      <button onclick="clearOutput()">C</button>
+      <button onclick="deleteChar()">&larr;</button>
+      <button onclick="insertChar('(')">(</button>
+      <button onclick="insertChar(')')">)</button>
+      <button onclick="insertChar('**')">^</button>
+      <button onclick="insertChar('/')">&#247;</button>
+      <button onclick="insertChar('*')">*</button>
+      <button onclick="insertChar('-')">-</button>
+      <button onclick="insertChar('+')">+</button>
+      <button onclick="insertChar('0')">0</button>
+      <button onclick="insertChar('1')">1</button>
+      <button onclick="insertChar('2')">2</button>
+      <button onclick="insertChar('3')">3</button>
+      <button onclick="insertChar('4')">4</button>
+      <button onclick="insertChar('5')">5</button>
+      <button onclick="insertChar('6')">6</button>
+      <button onclick="insertChar('7')">7</button>
+      <button onclick="insertChar('8')">8</button>
+      <button onclick="insertChar('9')">9</button>
+      <button onclick="insertChar('.')">.</button>
+      <button onclick="insertChar('pi')">π</button>
+      <button onclick="insertChar('e')">e</button>
+      <button onclick="insertChar('sin(')">sin</button>
+      <button onclick="insertChar('cos(')">cos</button>
+      <button onclick="insertChar('tan(')">tan</button>
+      <button onclick="insertChar('asin(')">asin</button>
+      <button onclick="insertChar('acos(')">acos</button>
+      <button onclick="insertChar('atan(')">atan</button>
+      <button onclick="insertChar('sinh(')">sinh</button>
+      <button onclick="insertChar('cosh(')">cosh</button>
+      <button onclick="insertChar('tanh(')">tanh</button>
+      <button onclick="insertChar('ln(')">ln</button>
+      <button onclick="insertChar('log(')">log</button>
+      <button onclick="insertChar('exp(')">exp</button>
+      <button onclick="insertChar('sqrt(')">√</button>
+      <button onclick="insertChar('abs(')">|x|</button>
+      <button onclick="insertChar('round(')">round</button>
+      <button onclick="calculate()">=</button>
+    </div>
+    <script src="calc.js"></script>
+  </body>
 </html>
