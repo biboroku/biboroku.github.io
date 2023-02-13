@@ -12,10 +12,32 @@
         board.appendChild(newMessage);
         document.getElementById("name").value = "";
         document.getElementById("message").value = "";
+        saveMessages();
+      }
+
+      function saveMessages() {
+        var messages = [];
+        var messageNodes = document.querySelectorAll("#board > div");
+        for (var i = 0; i < messageNodes.length; i++) {
+          messages.push(messageNodes[i].innerHTML);
+        }
+        localStorage.setItem("messages", JSON.stringify(messages));
+      }
+
+      function loadMessages() {
+        var messages = JSON.parse(localStorage.getItem("messages"));
+        if (messages) {
+          var board = document.getElementById("board");
+          for (var i = 0; i < messages.length; i++) {
+            var newMessage = document.createElement("div");
+            newMessage.innerHTML = messages[i];
+            board.appendChild(newMessage);
+          }
+        }
       }
     </script>
   </head>
-  <body>
+  <body onload="loadMessages()">
     <h1>Web掲示板</h1>
     <div>
       <label for="name">名前:</label>
