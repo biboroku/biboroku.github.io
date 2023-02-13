@@ -26,7 +26,21 @@
             <h1>バーゼル問題の収束おっっっっそ!</h1>
             <p class="minmin">有名な定理としてすべての自然数の2乗の逆数の和は円周率の二乗を6で割ったものと等しいというものがあるんですけど、それを円周率の計算に使えるかなと思ってみたので実装してみたところ、100万項まで計算しても小数点以下5桁までしか一致してなくて絶望しました。</p>
             <h2>コード(Python)</h2>
-            
+            <pre>
+                <code>
+                    <span>import math</span>
+
+                    <span>def calculate_pi(n):</span>
+                    <span>    pi_sum = 0</span>
+                    <span>    for i in range(1, n+1):</span>
+                    <span>        pi_sum += 1/(i**2)</span>
+                    <span>    pi = math.sqrt(pi_sum*6)</span>
+                    <span>    return pi</span>
+                    
+                        <span>print(calculate_pi(1000000))</span>
+                </code>
+            </pre>
+            <p class="minmin">良い子のみんなはマチンの公式とかG-Lアルゴリズムとかを使おうね!</p>
         </div>
 </body>
 <div class="gradientfooter">

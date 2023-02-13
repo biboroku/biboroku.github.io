@@ -97,3 +97,39 @@
   body{
     margin: 20px;
   }
+  /* 行番号用のスタイル */
+pre {
+  counter-reset: line-numbers;
+}
+pre > code {
+  counter-reset: line-numbers;
+}
+pre > code > span {
+  counter-increment: line-numbers;
+  display: block;
+}
+
+/* ソースコード表示用のスタイル */
+pre > code {
+  display: block;
+  padding: 1em;
+  background-color: #2b2b2b;
+  color: #f8f8f2;
+  border-radius: 5px;
+  font-size: 1em;
+  line-height: 0.3;
+  tab-size: 4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* 行番号のスタイル */
+pre > code > span:before {
+  content: counter(line-numbers);
+  display: inline-block;
+  padding: 0 1em;
+  margin-right: 1em;
+  color: #75715e;
+  text-align: right;
+}
+

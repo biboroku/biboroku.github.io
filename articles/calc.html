@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja">
-
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
     <meta name=”robots” content=”noindex,nofollow”>
     <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
@@ -9,60 +8,57 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-store">
     <meta http-equiv="Cache-Control" content="no-cache">
-    <link rel="stylesheet" href="../style.css">
     <title>僕の備忘録!!!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
-    <script src="../main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.1/math.js"></script>
-    <script src="calculator.js"></script>
-</head>
-
-<body>
-        <div class="gradientheader">
-            <header><a href="instagram.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
-        </div>
-        <div class="siro">
-            <h1>特殊関数電卓</h1>
-            <input type="text" id="input" value="" />
-            <br />
-            <br />
-            <button onclick="buttonPressed('sin(')">sin</button>
-            <button onclick="buttonPressed('cos(')">cos</button>
-            <button onclick="buttonPressed('tan(')">tan</button>
-            <button onclick="buttonPressed('log(')">log</button>
-            <br />
-            <button onclick="buttonPressed('exp(')">exp</button>
-            <button onclick="buttonPressed('sqrt(')">sqrt</button>
-            <button onclick="buttonPressed('abs(')">abs</button>
-            <button onclick="buttonPressed('gamma(')">gamma</button>
-            <br />
-            <button onclick="buttonPressed('1')">1</button>
-            <button onclick="buttonPressed('2')">2</button>
-            <button onclick="buttonPressed('3')">3</button>
-            <button onclick="buttonPressed('+')">+</button>
-            <br />
-            <button onclick="buttonPressed('4')">4</button>
-            <button onclick="buttonPressed('5')">5</button>
-            <button onclick="buttonPressed('6')">6</button>
-            <button onclick="buttonPressed('-')">-</button>
-            <br />
-            <button onclick="buttonPressed('7')">7</button>
-            <button onclick="buttonPressed('8')">8</button>
-            <button onclick="buttonPressed('9')">9</button>
-            <button onclick="buttonPressed('*')">*</button>
-            <br />
-            <button onclick="buttonPressed('0')">0</button>
-            <button onclick="buttonPressed('.')">.</button>
-            <button onclick="buttonPressed('/')">/</button>
-            <button onclick="buttonPressed('=')">=</button>
-            <br />
-            <button onclick="clearInput()">Clear</button>
-        </div>
-</body>
-<div class="gradientfooter">
-    <header>©僕の備忘録!!!-2023</header>
-</div>
-</html> 
+    <link rel="stylesheet" type="text/css" href="calc.css">
+  </head>
+  <body>
+    <h1>関数電卓!!!</h1>
+    なんかいつものスタイルシート使えないから地味だけどごめん.
+    <div id="calculator">
+      <input type="text" id="output">
+      <button onclick="clearOutput()">C</button>
+      <button onclick="deleteChar()">&larr;</button>
+      <button onclick="insertChar('(')">(</button>
+      <button onclick="insertChar(')')">)</button>
+      <button onclick="insertChar('**')">^</button>
+      <button onclick="insertChar('/')">&#247;</button>
+      <button onclick="insertChar('*')">*</button>
+      <button onclick="insertChar('-')">-</button>
+      <button onclick="insertChar('+')">+</button>
+      <button onclick="insertChar('0')">0</button>
+      <button onclick="insertChar('1')">1</button>
+      <button onclick="insertChar('2')">2</button>
+      <button onclick="insertChar('3')">3</button>
+      <button onclick="insertChar('4')">4</button>
+      <button onclick="insertChar('5')">5</button>
+      <button onclick="insertChar('6')">6</button>
+      <button onclick="insertChar('7')">7</button>
+      <button onclick="insertChar('8')">8</button>
+      <button onclick="insertChar('9')">9</button>
+      <button onclick="insertChar('.')">.</button>
+      <button onclick="insertChar('pi')">π</button>
+      <button onclick="insertChar('e')">e</button>
+      <button onclick="insertChar('sin(')">sin</button>
+      <button onclick="insertChar('cos(')">cos</button>
+      <button onclick="insertChar('tan(')">tan</button>
+      <button onclick="insertChar('asin(')">asin</button>
+      <button onclick="insertChar('acos(')">acos</button>
+      <button onclick="insertChar('atan(')">atan</button>
+      <button onclick="insertChar('sinh(')">sinh</button>
+      <button onclick="insertChar('cosh(')">cosh</button>
+      <button onclick="insertChar('tanh(')">tanh</button>
+      <button onclick="insertChar('ln(')">ln</button>
+      <button onclick="insertChar('log(')">log</button>
+      <button onclick="insertChar('exp(')">exp</button>
+      <button onclick="insertChar('sqrt(')">√</button>
+      <button onclick="insertChar('abs(')">|x|</button>
+      <button onclick="insertChar('round(')">round</button>
+      <button onclick="calculate()">=</button>
+    </div>
+    <script src="calc.js"></script>
+  </body>
+</html>
