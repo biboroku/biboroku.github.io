@@ -1,3 +1,17 @@
+
+function clearOutput() {
+    document.getElementById('output').value = '';
+  }
+  
+function deleteChar() {
+    let output = document.getElementById('output').value;
+    document.getElementById('output').value = output.substring(0, output.length - 1);
+  }
+  
+function insertChar(char) {
+    document.getElementById('output').value += char;
+  }
+  
 function calculate() {
     // Get the expression from the input field
     let expr = document.getElementById('output').value;
