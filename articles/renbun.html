@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>連分数計算機</title>
+  <script>
+    function calc() {
+      var x = parseFloat(document.getElementById("x").value);
+      var a = Math.floor(x);
+      var b = x - a;
+      var eps = 1e-10;
+      var arr = [a];
+      while (Math.abs(b) > eps) {
+        x = 1 / b;
+        a = Math.floor(x);
+        b = x - a;
+        arr.push(a);
+      }
+      document.getElementById("result").innerHTML = "[" + arr.join(", ") + "]";
+    }
+  </script>
+</head>
+<body>
+  <h1>連分数計算機</h1>
+  <form>
+    <label for="x">Enter a real number:</label>
+    <input type="number" step="any" id="x">
+    <input type="button" value="Calculate" onclick="calc()">
+  </form>
+  <br>
+  <div id="result"></div>
+</body>
+</html>
