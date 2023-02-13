@@ -101,8 +101,7 @@ h1:before {
 h1:after {
   bottom: 0;
 }
+
 hr {
-  height: 8px;
-  background-image: repeating-linear-gradient(45deg, #ccc 0, #ccc 1px, transparent 0, transparent 50%);
-  background-size: 8px 8px;
+  border-top: 3px double #ccc;
 }
