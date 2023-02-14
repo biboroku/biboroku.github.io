@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>2次正方行列の計算</title>
+    <script src="matrix_calculator.js"></script>
+  </head>
+  <body>
+    <h1>2次正方行列の計算</h1>
+    <label for="matrix">行列の要素 (カンマで区切って入力)</label>
+    <input type="text" id="matrix" placeholder="1,2,3,4">
+    <br>
+    <button onclick="calculate()">計算する</button>
+    <br>
+    <label for="determinant">行列式</label>
+    <input type="text" id="determinant" readonly>
+    <br>
+    <label for="inverse">逆行列</label>
+    <input type="text" id="inverse" readonly>
+    <br>
+    <label for="rank">ランク</label>
+    <input type="text" id="rank" readonly>
+    <br>
+    <label for="power">累乗 (整数で入力)</label>
+    <input type="text" id="power" placeholder="2">
+    <br>
+    <button onclick="calculatePower()">累乗する</button>
+    <br>
+    <label for="poweredMatrix">累乗行列</label>
+    <input type="text" id="poweredMatrix" readonly>
+  </body>
+</html>
