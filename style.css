@@ -109,12 +109,12 @@ hr {
   border-top: 3px double #ccc;
 }
 
-ul, ol {
+ul {
   padding: 0;
   position: relative;
 }
 
-ul li, ol li {
+ul li {
   color: black;
   border-left: solid 8px orange;/*左側の線*/
   background: whitesmoke;/*背景色*/
