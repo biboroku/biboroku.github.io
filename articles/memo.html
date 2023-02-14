@@ -1,7 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href="../style.css">
     <title>メモ帳</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../main.js"></script>
     <script>
       function addMessage() {
         var name = document.getElementById("name").value;
@@ -36,19 +52,26 @@
         }
       }
     </script>
-  </head>
-  <body onload="loadMessages()">
-    <h1>Webメモ帳</h1>
-    ローカルストレージを利用したかんたんなメモ帳です.ブラウザを変えると見られなくなります.他人に見られることもありません.
-    <div>
-      <label for="name">件名:</label>
-      <input type="text" id="name" />
-    </div>
-    <div>
-      <label for="message">内容:</label>
-      <textarea id="message"></textarea>
-    </div>
-    <button onclick="addMessage()">保存</button>
-    <div id="board"></div>
-  </body>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>メモ帳</h1>
+            <p class="minmin">ローカルストレージを利用したかんたんなメモ帳です.<br>ブラウザを変えると見られなくなります.</p>
+            <div>
+                <label for="name">タイトル:</label>
+                <input type="text" id="name" /><br>
+                <label for="message">内容:</label>
+                <textarea id="message"></textarea>
+              </div>
+              <button onclick="addMessage()">保存</button>
+              <div id="board"></div>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
