@@ -38,28 +38,28 @@ function calculate() {
 }
 
 function calculateDeterminant(matrix) {
-  const a = matrix[0][0];
-  const b = matrix[0][1];
-  const c = matrix[1][0];
-  const d = matrix[1][1];
-  return a * d - b * c;
+    const a = matrix[0][0];
+    const b = matrix[0][1];
+    const c = matrix[1][0];
+    const d = matrix[1][1];
+    return parseInt((a * d - b * c).toFixed(0));
 }
 
 function calculateInverse(matrix) {
-  const a = matrix[0][0];
-  const b = matrix[0][1];
-  const c = matrix[1][0];
-  const d = matrix[1][1];
-  const determinant = calculateDeterminant(matrix);
-  if (determinant === 0) {
-    return null;
+    const a = matrix[0][0];
+    const b = matrix[0][1];
+    const c = matrix[1][0];
+    const d = matrix[1][1];
+    const determinant = calculateDeterminant(matrix);
+    if (determinant === 0) {
+      return null;
+    }
+    const inverse = [
+      [parseInt((d / determinant).toFixed(0)), parseInt((-b / determinant).toFixed(0))],
+      [parseInt((-c / determinant).toFixed(0)), parseInt((a / determinant).toFixed(0))]
+    ];
+    return inverse;
   }
-  const inverse = [
-    [d / determinant, -b / determinant],
-    [-c / determinant, a / determinant]
-  ];
-  return inverse;
-}
 
 function calculateRank(matrix) {
   if (calculateDeterminant(matrix) !== 0) {
@@ -75,15 +75,17 @@ function calculateRank(matrix) {
 }
 
 function calculateMatrixPower(matrix, power) {
-  if (power === 0) {
-    return [[1, 0], [0, 1]];
+    if (power === 0) {
+      return [[1, 0], [0, 1]];
+    }
+    let poweredMatrix = matrix;
+    for (let i = 1; i < power; i++) {
+      poweredMatrix = multiplyMatrices(poweredMatrix, matrix);
+    }
+    // 四捨五入して整数に丸める
+    poweredMatrix = poweredMatrix.map(row => row.map(element => parseInt(element.toFixed(0))));
+    return poweredMatrix;
   }
-  let poweredMatrix = matrix;
-  for (let i = 1; i < power; i++) {
-    poweredMatrix = multiplyMatrices(poweredMatrix, matrix);
-  }
-  return poweredMatrix;
-}
 
 function multiplyMatrices(matrix1, matrix2) {
   const result = [];
