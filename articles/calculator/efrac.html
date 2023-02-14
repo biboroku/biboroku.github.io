@@ -1,34 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-  <title>エジプト式分数計算機</title>
-  <script>
-    function calc() {
-      var input = document.getElementById("input").value;
-      var frac = input.split("/");
-      var numerator = parseInt(frac[0]);
-      var denominator = parseInt(frac[1]);
-      var unitFractions = [];
-
-      while (numerator > 0) {
-        var unitDenominator = Math.ceil(denominator / numerator);
-        unitFractions.push("1/" + unitDenominator);
-        numerator = (numerator * unitDenominator) - denominator;
-        denominator = denominator * unitDenominator;
-      }
-
-      document.getElementById("output").innerHTML = unitFractions.join(" + ");
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>エジプト式分数計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+    <script>
+        function calc() {
+            var input = document.getElementById("input").value;
+            var frac = input.split("/");
+            var numerator = parseInt(frac[0]);
+            var denominator = parseInt(frac[1]);
+            var unitFractions = [];
+  
+            while (numerator > 0) {
+              var unitDenominator = Math.ceil(denominator / numerator);
+              unitFractions.push("1/" + unitDenominator);
+              numerator = (numerator * unitDenominator) - denominator;
+              denominator = denominator * unitDenominator;
+            }
+  
+            document.getElementById("output").innerHTML = unitFractions.join(" + ");
+        }
+    </script>
 </head>
+
 <body>
-  <h1>エジプト式分数計算機</h1>
-  <form>
-    <label for="input">Enter a fraction:</label>
-    <input type="text" id="input">
-    <input type="button" value="Calculate" onclick="calc()">
-  </form>
-  <br>
-  <div id="output"></div>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>エジプト式分数計算機</h1>
+            <form>
+                <p class="minmin">すべての有理数を単位分数の和に表します.</p>
+                <label for="input">分数を入力:</label>
+                <input type="text" id="input">
+                <input type="button" value="Calculate" onclick="calc()">
+              </form>
+              <br>
+              <div id="output"></div>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
