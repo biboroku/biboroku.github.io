@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>マンデルブロ集合</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>マンデルブロ集合の描画</h1>
+            <p class="minmin">Javascriptで作ったマンデルブロ集合の外形を表示するプログラムです.</p>
+            <canvas id="canvas"></canvas>
+            <script>
+                // キャンバス要素を取得する
+                var canvas = document.getElementById("canvas");
+
+                // 描画コンテキストを取得する
+                var ctx = canvas.getContext("2d");
+
+                // キャンバスの幅と高さを設定する
+                canvas.width = 1920;
+                canvas.height = 1080;
+
+                // マンデルブロ集合の各点について計算する
+                for (var x = 0; x < canvas.width; x++) {
+                    for (var y = 0; y < canvas.height; y++) {
+                        var zx = 0;
+                        var zy = 0;
+                        var cx = (x - canvas.width / 2) * 4 / canvas.width;
+                        var cy = (y - canvas.height / 2) * 4 / canvas.width;
+                        var i = 0;
+                        while (i < 100 && zx * zx + zy * zy < 4) {
+                            var tx = zx * zx - zy * zy + cx;
+                            zy = 2 * zx * zy + cy;
+                            zx = tx;
+                            i++;
+                        }
+
+                        // マンデルブロ集合に属する場合は、黒に塗りつぶす
+                        if (i == 100) {
+                            ctx.fillStyle = "black";
+                            ctx.fillRect(x, y, 1, 1);
+                        }
+                    }
+                }
+            </script>
+
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
+</html>
