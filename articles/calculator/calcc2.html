@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>複素数計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+    <script>
+        function add() {
+          var a = document.getElementById("a1").value;
+          var b = document.getElementById("b1").value;
+          var c = document.getElementById("a2").value;
+          var d = document.getElementById("b2").value;
+          var re = parseFloat(a) + parseFloat(c);
+          var im = parseFloat(b) + parseFloat(d);
+          document.getElementById("result").innerHTML = re + " + " + im + "i";
+        }
+        
+        function subtract() {
+          var a = document.getElementById("a1").value;
+          var b = document.getElementById("b1").value;
+          var c = document.getElementById("a2").value;
+          var d = document.getElementById("b2").value;
+          var re = parseFloat(a) - parseFloat(c);
+          var im = parseFloat(b) - parseFloat(d);
+          document.getElementById("result").innerHTML = re + " + " + im + "i";
+        }
+        
+        function multiply() {
+          var a = document.getElementById("a1").value;
+          var b = document.getElementById("b1").value;
+          var c = document.getElementById("a2").value;
+          var d = document.getElementById("b2").value;
+          var re = parseFloat(a) * parseFloat(c) - parseFloat(b) * parseFloat(d);
+          var im = parseFloat(a) * parseFloat(d) + parseFloat(b) * parseFloat(c);
+          document.getElementById("result").innerHTML = re + " + " + im + "i";
+        }
+        
+        function divide() {
+          var a = document.getElementById("a1").value;
+          var b = document.getElementById("b1").value;
+          var c = document.getElementById("a2").value;
+          var d = document.getElementById("b2").value;
+          var denom = parseFloat(c) * parseFloat(c) + parseFloat(d) * parseFloat(d);
+          var re = (parseFloat(a) * parseFloat(c) + parseFloat(b) * parseFloat(d)) / denom;
+          var im = (parseFloat(b) * parseFloat(c) - parseFloat(a) * parseFloat(d)) / denom;
+          document.getElementById("result").innerHTML = re + " + " + im + "i";
+        }
+      </script>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>複素数計算機</h1>
+            <form>
+                <input type="text" id="a1"> + <input type="text" id="b1">i
+                <select>
+                  <option value="add">+</option>
+                  <option value="subtract">-</option>
+                  <option value="multiply">*</option>
+                  <option value="divide">/</option>
+                </select><br>
+                <input type="text" id="a2"> + <input type="text" id="b2">i
+                <input type="button" value="Calculate" onclick="eval(document.querySelector('select').value)();">
+              </form>
+              <br>
+              <div id="result"></div>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
+</html>
