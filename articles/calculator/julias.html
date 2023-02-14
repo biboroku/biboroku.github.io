@@ -1,46 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-    <title>Julia Set</title>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>ジュリア集合</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
 </head>
+
 <body>
-    <canvas id="canvas"></canvas>
-    <script>
-        // キャンバス要素を取得する
-        var canvas = document.getElementById("canvas");
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>ジュリア集合の描画</h1>
+            <p class="minmin">Javascriptで作ったジュリア集合の概形を表示するプログラムです.</p>
+            <canvas id="canvas"></canvas>
+            <script>
+                // キャンバス要素を取得する
+                var canvas = document.getElementById("canvas");
 
-        // 描画コンテキストを取得する
-        var ctx = canvas.getContext("2d");
+                // 描画コンテキストを取得する
+                var ctx = canvas.getContext("2d");
 
-        // キャンバスの幅と高さを設定する
-        canvas.width = 1920;
-        canvas.height = 1080;
+                // キャンバスの幅と高さを設定する
+                canvas.width = 1280;
+                canvas.height = 720;
 
-        // パラメータを設定する
-        var c = { x: -0.8, y: 0.156 };
-        var zoom = 1;
-        var maxIter = 100;
+                // パラメータを設定する
+                var c = { x: -0.8, y: 0.156 };
+                var zoom = 1;
+                var maxIter = 100;
 
-        // ジュリア集合の各点について計算する
-        for (var x = 0; x < canvas.width; x++) {
-            for (var y = 0; y < canvas.height; y++) {
-                var zx = (x - canvas.width / 2) / (0.5 * zoom * canvas.width);
-                var zy = (y - canvas.height / 2) / (0.5 * zoom * canvas.height);
-                var i = 0;
-                while (i < maxIter && zx * zx + zy * zy < 4) {
-                    var tx = zx * zx - zy * zy + c.x;
-                    zy = 2 * zx * zy + c.y;
-                    zx = tx;
-                    i++;
+                // ジュリア集合の各点について計算する
+                for (var x = 0; x < canvas.width; x++) {
+                    for (var y = 0; y < canvas.height; y++) {
+                        var zx = (x - canvas.width / 2) / (0.5 * zoom * canvas.width);
+                        var zy = (y - canvas.height / 2) / (0.5 * zoom * canvas.height);
+                        var i = 0;
+                        while (i < maxIter && zx * zx + zy * zy < 4) {
+                            var tx = zx * zx - zy * zy + c.x;
+                            zy = 2 * zx * zy + c.y;
+                            zx = tx;
+                            i++;
+                        }
+
+                        // ジュリア集合に属する場合は、黒に塗りつぶす
+                        if (i == maxIter) {
+                            ctx.fillStyle = "black";
+                            ctx.fillRect(x, y, 1, 1);
+                        }
+                    }
                 }
-
-                // ジュリア集合に属する場合は、黒に塗りつぶす
-                if (i == maxIter) {
-                    ctx.fillStyle = "black";
-                    ctx.fillRect(x, y, 1, 1);
-                }
-            }
-        }
-    </script>
+            </script>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
