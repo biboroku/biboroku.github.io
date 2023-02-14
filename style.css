@@ -124,3 +124,8 @@ ul li, ol li {
   padding: 0.5em;
   list-style-type: none!important;
 }
+h2 {
+  /*線の種類（実線） 太さ 色*/
+  border-bottom: solid 3px black;
+  width: fit-content;
+}
