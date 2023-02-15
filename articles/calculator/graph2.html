@@ -1,66 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Math Function Grapher</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.js" integrity="sha512-wQ44O/vNzWdMBKjISiX9bOy6gzGx6iBpj6UOG1fUkVB6nOO2iUpzNC6oYn6X9P6Eh+n48hPIwaaC+2r/cwohbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<style>
-		canvas {
-			border: 1px solid black;
-		}
-	</style>
-</head>
-<body>
-	<h1>Math Function Grapher</h1>
-	<form>
-		<label for="function">f(x) = </label>
-		<input type="text" id="function" name="function" placeholder="Enter a math function" required>
-		<button type="submit">Graph</button>
-	</form>
-	<canvas id="graph" width="600" height="400"></canvas>
-	<script>
-		const canvas = document.getElementById("graph");
-		const ctx = canvas.getContext("2d");
+  <head>
+    <title>Math Function Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <canvas id="myChart"></canvas>
+    <script>
+      // グラフを描画するためのデータを作成
+      const xValues = [];
+      const yValues = [];
+      for (let x = -10; x <= 10; x += 0.1) {
+        xValues.push(x);
+        yValues.push(Math.sin(x));
+      }
 
-		function drawAxes() {
-			// Draw x-axis
-			ctx.beginPath();
-			ctx.moveTo(0, canvas.height/2);
-			ctx.lineTo(canvas.width, canvas.height/2);
-			ctx.stroke();
+      // グラフを描画するための設定
+      const chartData = {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              label: "y = sin(x)",
+              data: yValues,
+              fill: false,
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "x",
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "y",
+              },
+            },
+          },
+        },
+      };
 
-			// Draw y-axis
-			ctx.beginPath();
-			ctx.moveTo(canvas.width/2, 0);
-			ctx.lineTo(canvas.width/2, canvas.height);
-			ctx.stroke();
-		}
-
-		function drawFunction(fx, color) {
-			const scale = 20;
-			const xMin = -canvas.width/2 / scale;
-			const xMax = canvas.width/2 / scale;
-			const yMin = -canvas.height/2 / scale;
-			const yMax = canvas.height/2 / scale;
-			const dx = 1/scale;
-
-			ctx.strokeStyle = color;
-			ctx.beginPath();
-			ctx.moveTo((xMin * scale) + (canvas.width/2), (-fx(xMin) * scale) + (canvas.height/2));
-			for (let x = xMin; x <= xMax; x += dx) {
-				ctx.lineTo((x * scale) + (canvas.width/2), (-fx(x) * scale) + (canvas.height/2));
-			}
-			ctx.stroke();
-		}
-
-		document.querySelector("form").addEventListener("submit", function(event) {
-			event.preventDefault();
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			drawAxes();
-
-			const fxStr = document.getElementById("function").value;
-			const fx = math.parse(fxStr).compile();
-			drawFunction(fx.evaluate.bind(fx), "blue");
-		});
-	</script>
-</body>
+      // グラフを描画
+      const myChart = new Chart(document.getElementById("myChart"), chartData);
+    </script>
+  </body>
 </html>
