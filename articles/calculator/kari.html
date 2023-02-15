@@ -1,55 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pell Equation Solver</title>
-    <script type="text/javascript">
-        function solvePell() {
-            var n = parseInt(document.getElementById("n").value);
-            var x = 1;
-            var y = 0;
-            var a = Math.floor(Math.sqrt(n));
-            var p = a;
-            var q = 1;
-            var result = "";
-            
-            if (a*a == n) {
-                result = "No solution exists.";
-            }
-            else {
-                var i = 0;
-                while (true) {
-                    i++;
-                    x = p*x + n*q*y;
-                    y = p*y + q*x;
-                    var factor = (a + x) / y;
-                    p = factor*y - p;
-                    q = Math.floor((n - p*p) / q);
-                    var b = (a + x) / y;
-                    if (i == 1) {
-                        result += "[" + p + ", " + q + "]";
-                    }
-                    else if (i % 2 == 0) {
-                        result += ", [" + p + ", " + q + "]";
-                    }
-                    else {
-                        result += ", [" + (b*p + 1) + ", " + (b*q) + "]";
-                    }
-                    if (p*p - n*q*q == 1) {
-                        break;
-                    }
-                }
-            }
-            
-            document.getElementById("result").innerHTML = result;
-        }
-    </script>
+	<title>楕円積分の計算</title>
 </head>
 <body>
-    <h1>Pell Equation Solver</h1>
-    <p>Enter a positive integer value for n:</p>
-    <input type="number" id="n" min="1" required>
-    <button type="button" onclick="solvePell()">Solve</button>
-    <p>The smallest solution for Pell equation x^2 - ny^2 = 1 is:</p>
-    <p id="result"></p>
+	<h1>楕円積分の計算</h1>
+	<p>
+		楕円のx軸半径: <input type="number" id="a" step="any"><br>
+		楕円のy軸半径: <input type="number" id="b" step="any"><br>
+		積分区間の下限: <input type="number" id="start" step="any"><br>
+		積分区間の上限: <input type="number" id="end" step="any"><br>
+		積分精度: <input type="number" id="n" step="1" value="100"><br>
+		<button onclick="calculate()">計算する</button>
+	</p>
+	<p>
+		結果: <span id="result"></span>
+	</p>
+	<script src="elliptic_integral.js"></script>
 </body>
 </html>
