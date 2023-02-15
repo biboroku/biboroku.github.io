@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Circle on Coordinate System Checker</title>
+  <style>
+    input {
+      font-size: 1.2em;
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 5px;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Circle on Coordinate System Checker</h1>
+  <p>Enter the coordinates of four points:</p>
+  <p>(x1, y1)</p>
+  <input type="text" id="x1" placeholder="x1">
+  <input type="text" id="y1" placeholder="y1">
+  <p>(x2, y2)</p>
+  <input type="text" id="x2" placeholder="x2">
+  <input type="text" id="y2" placeholder="y2">
+  <p>(x3, y3)</p>
+  <input type="text" id="x3" placeholder="x3">
+  <input type="text" id="y3" placeholder="y3">
+  <p>(x4, y4)</p>
+  <input type="text" id="x4" placeholder="x4">
+  <input type="text" id="y4" placeholder="y4">
+  <br>
+  <button onclick="check()">Check</button>
+  <p id="result"></p>
+  <script>
+    function check() {
+      var x1 = parseFloat(document.getElementById('x1').value);
+      var y1 = parseFloat(document.getElementById('y1').value);
+      var x2 = parseFloat(document.getElementById('x2').value);
+      var y2 = parseFloat(document.getElementById('y2').value);
+      var x3 = parseFloat(document.getElementById('x3').value);
+      var y3 = parseFloat(document.getElementById('y3').value);
+      var x4 = parseFloat(document.getElementById('x4').value);
+      var y4 = parseFloat(document.getElementById('y4').value);
+
+      if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2) || isNaN(x3) || isNaN(y3) || isNaN(x4) || isNaN(y4)) {
+        document.getElementById('result').innerHTML = 'Please enter valid coordinates.';
+        return;
+      }
+
+      var d1 = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+      var d2 = (x1 - x3) * (x1 - x3) + (y1 - y3) * (y1 - y3);
+      var d3 = (x1 - x4) * (x1 - x4) + (y1 - y4) * (y1 - y4);
+      var d4 = (x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3);
+      var d5 = (x2 - x4) * (x2 - x4) + (y2 - y4) * (y2 - y4);
+      var d6 = (x3 - x4) * (x3 - x4) + (y3 - y4) * (y3 - y4);
+
+      if (d1 == d2 && d2 == d3 && d3 == d4 && d4 == d5 && d5 == d6) {
+        document.getElementById('result').innerHTML = 'Yes';
+      } else {
+        document.getElementById('result').innerHTML = 'No';
+      }
+    }
+  </script>
+</body>
+</html>
