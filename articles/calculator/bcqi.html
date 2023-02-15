@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quater-Imaginary Numeral System Converter</title>
+  <style>
+    input {
+      font-size: 1.2em;
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 5px;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quater-Imaginary Numeral System Converter</h1>
+  <p>Enter an integer to convert:</p>
+  <input type="text" id="input">
+  <button onclick="convert()">Convert</button>
+  <p id="result"></p>
+  <script>
+    function convert() {
+      var input = document.getElementById('input').value;
+      var n = parseInt(input);
+      var result = document.getElementById('result');
+      if (isNaN(n)) {
+        result.innerHTML = 'Please enter a valid integer.';
+        return;
+      }
+      var integerPart = Math.abs(Math.floor(n));
+      var fractionalPart = Math.abs(n) - integerPart;
+      var integerDigits = [];
+      var fractionalDigits = [];
+      while (integerPart > 0) {
+        integerDigits.push(integerPart % 4);
+        integerPart = Math.floor(integerPart / 4);
+      }
+      while (fractionalPart > 0) {
+        fractionalPart *= 4;
+        var digit = Math.floor(fractionalPart);
+        fractionalDigits.push(digit);
+        fractionalPart -= digit;
+      }
+      var integerPartStr = integerDigits.length > 0 ? integerDigits.reverse().join('') : '0';
+      var fractionalPartStr = fractionalDigits.length > 0 ? ' ' + convertFractionalPart(fractionalDigits) : '';
+      result.innerHTML = (n < 0 ? '-' : '') + integerPartStr + fractionalPartStr;
+    }
+
+    function convertFractionalPart(digits) {
+      var str = '';
+      for (var i = 0; i < digits.length; i++) {
+        if (digits[i] === 1) {
+          str += 'i/4';
+        } else if (digits[i] === 2) {
+          str += 'i/2';
+        } else if (digits[i] === 3) {
+          str += '3i/4';
+        } else {
+          str += '0';
+        }
+      }
+      return str;
+    }
+  </script>
+</body>
+</html>
