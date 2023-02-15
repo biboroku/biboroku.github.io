@@ -1,56 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Factorial Base Converter</title>
-  <style>
-    input {
-      font-size: 1.2em;
-      padding: 5px;
-      width: 200px;
-    }
-    button {
-      font-size: 1.2em;
-      padding: 5px;
-    }
-    #result {
-      font-size: 1.2em;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>階乗進数変換機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+    <style>
+        input {
+          font-size: 1.2em;
+          padding: 5px;
+          width: 200px;
+        }
+        button {
+          font-size: 1.2em;
+          padding: 5px;
+        }
+        #result {
+          font-size: 1.2em;
+          margin-top: 10px;
+        }
+      </style>
 </head>
+
 <body>
-  <h1>Factorial Base Converter</h1>
-  <p>Enter an integer to convert:</p>
-  <input type="text" id="input">
-  <button onclick="convert()">Convert</button>
-  <p id="result"></p>
-  <script>
-    function convert() {
-      var input = document.getElementById('input').value;
-      var n = parseInt(input);
-      var result = document.getElementById('result');
-      if (isNaN(n)) {
-        result.innerHTML = 'Please enter a valid integer.';
-        return;
-      }
-      if (n < 0) {
-        result.innerHTML = 'Please enter a non-negative integer.';
-        return;
-      }
-      if (n === 0) {
-        result.innerHTML = '0';
-        return;
-      }
-      var digits = [];
-      var base = 1;
-      while (n > 0) {
-        digits.push(n % base);
-        n = Math.floor(n / base);
-        base++;
-      }
-      result.innerHTML = digits.reverse().join('');
-    }
-  </script>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>階乗進数変換機</h1>
+            <p class="minmin">十進数の整数を階乗進数に変換します.</p>
+            <input type="text" id="input">
+            <button onclick="convert()">変換!</button>
+            <p id="result"></p>
+            <script>
+              function convert() {
+                var input = document.getElementById('input').value;
+                var n = parseInt(input);
+                var result = document.getElementById('result');
+                if (isNaN(n)) {
+                  result.innerHTML = 'Please enter a valid integer.';
+                  return;
+                }
+                if (n < 0) {
+                  result.innerHTML = 'Please enter a non-negative integer.';
+                  return;
+                }
+                if (n === 0) {
+                  result.innerHTML = '0';
+                  return;
+                }
+                var digits = [];
+                var base = 1;
+                while (n > 0) {
+                  digits.push(n % base);
+                  n = Math.floor(n / base);
+                  base++;
+                }
+                result.innerHTML = digits.reverse().join('');
+              }
+            </script>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
