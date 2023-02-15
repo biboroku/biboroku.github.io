@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Quater-Imaginary Numeral System Converter</title>
-    <script>
 function convert() {
     const decimalNumber = document.getElementById("inputNumber").value;
     const isNegative = decimalNumber < 0;
@@ -28,14 +23,3 @@ function convert() {
     document.getElementById("output").innerHTML = quaterImaginary;
   }
   
-    </script>
-  </head>
-  <body>
-    <h1>Quater-Imaginary Numeral System Converter</h1>
-    <p>Enter a decimal number:</p>
-    <input type="number" id="inputNumber">
-    <button onclick="convert()">Convert</button>
-    <p>Quater-imaginary representation:</p>
-    <p id="output"></p>
-  </body>
-</html>
