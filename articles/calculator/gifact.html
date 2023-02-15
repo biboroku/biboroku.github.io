@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>有理整数ガウス整数環上分解</title>
+  <style>
+    input {
+      font-size: 1.2em;
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 5px;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>有理整数ガウス整数環上素元分解計算機</h1>
+  <p>有理整数を入力してください:</p>
+  <input type="text" id="input">
+  <button onclick="factorize()">Z[i]上で分解</button>
+  <p id="result"></p>
+  <script>
+    function factorize() {
+      var input = document.getElementById('input').value;
+      var n = parseInt(input);
+      var result = document.getElementById('result');
+      if (isNaN(n)) {
+        result.innerHTML = 'Please enter a valid integer.';
+        return;
+      }
+      var factors = [];
+      if (n === 0) {
+        factors.push('0');
+      }
+      if (n < 0) {
+        factors.push('-1');
+        n = -n;
+      }
+      while (n % 2 === 0) {
+        factors.push('2');
+        n /= 2;
+      }
+      var limit = Math.floor(Math.sqrt(n));
+      for (var a = 1; a <= limit; a++) {
+        for (var b = 1; b <= limit; b++) {
+          var norm = a * a + b * b;
+          if (norm === n) {
+            if (a === 0) {
+              factors.push(b + 'i');
+              factors.push('-' + b + 'i');
+            } else if (b === 0) {
+              factors.push(a);
+              factors.push(-a);
+            } else {
+              factors.push(a + '+' + b + 'i');
+              factors.push(a + '-' + b + 'i');
+              factors.push(-a + '+' + b + 'i');
+              factors.push(-a + '-' + b + 'i');
+            }
+          }
+        }
+      }
+      if (factors.length === 0) {
+        factors.push(input);
+      }
+      result.innerHTML = factors.join(', ');
+    }
+  </script>
+</body>
+</html>
