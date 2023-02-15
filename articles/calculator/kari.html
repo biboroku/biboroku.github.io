@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>複素関数の孤立特異点と留数を計算する</title>
+</head>
+<body>
+	<h1>複素関数の孤立特異点と留数を計算する</h1>
+	<label for="function">複素関数：</label>
+	<input type="text" id="function" placeholder="例：(z^2+1)/(z-1)" size="30">
+	<button onclick="calculate()">計算</button>
+	<br>
+	<br>
+	<label for="output">結果：</label>
+	<textarea id="output" rows="10" cols="50" readonly></textarea>
+</body>
+<script>
+function calculate() {
+    // 入力された複素関数の取得
+    const funcInput = document.getElementById("function").value;
+    // 複素関数の定義
+    const func = math.complex('f(z) = ' + funcInput);
+    // 孤立特異点の検出
+    const singularities = math.numeric.findSingularities(funcInput);
+    let outputText = "孤立特異点: ";
+    if (singularities.length === 0) {
+        outputText += "ありません\n";
+    } else {
+        outputText += singularities.join(", ") + "\n";
+    }
+    // 留数の計算
+    let residue = [];
+    for (let i = 0; i < singularities.length; i++) {
+        residue[i] = math.complex(math.numeric.residue(funcInput, singularities[i]));
+    }
+    outputText += "留数: " + residue.join(", ") + "\n";
+    // 結果の出力
+    document.getElementById("output").value = outputText;
+}
+</script>
+</html>
