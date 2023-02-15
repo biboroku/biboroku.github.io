@@ -17,8 +17,9 @@
 function calculate() {
     // 入力された複素関数の取得
     const funcInput = document.getElementById("function").value;
-    // 複素関数の定義
-    const func = math.complex('f(z) = ' + funcInput);
+    // 複素数の定義
+    const z1 = math.complex(1, 2); // 1 + 2i
+    const z2 = math.complex({ r: 3, phi: math.pi / 4 }); // 3e^(i*pi/4)
     // 孤立特異点の検出
     const singularities = math.numeric.findSingularities(funcInput);
     let outputText = "孤立特異点: ";
