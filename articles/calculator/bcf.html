@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Factorial Base Converter</title>
+  <style>
+    input {
+      font-size: 1.2em;
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 5px;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Factorial Base Converter</h1>
+  <p>Enter an integer to convert:</p>
+  <input type="text" id="input">
+  <button onclick="convert()">Convert</button>
+  <p id="result"></p>
+  <script>
+    function convert() {
+      var input = document.getElementById('input').value;
+      var n = parseInt(input);
+      var result = document.getElementById('result');
+      if (isNaN(n)) {
+        result.innerHTML = 'Please enter a valid integer.';
+        return;
+      }
+      if (n < 0) {
+        result.innerHTML = 'Please enter a non-negative integer.';
+        return;
+      }
+      if (n === 0) {
+        result.innerHTML = '0';
+        return;
+      }
+      var digits = [];
+      var base = 1;
+      while (n > 0) {
+        digits.push(n % base);
+        n = Math.floor(n / base);
+        base++;
+      }
+      result.innerHTML = digits.reverse().join('');
+    }
+  </script>
+</body>
+</html>
