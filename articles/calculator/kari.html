@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>複素関数の孤立特異点と留数を計算する</title>
+    <title>Pell Equation Solver</title>
+    <script type="text/javascript">
+        function solvePell() {
+            var n = parseInt(document.getElementById("n").value);
+            var x = 1;
+            var y = 0;
+            var a = Math.floor(Math.sqrt(n));
+            var p = a;
+            var q = 1;
+            var result = "";
+            
+            if (a*a == n) {
+                result = "No solution exists.";
+            }
+            else {
+                var i = 0;
+                while (true) {
+                    i++;
+                    x = p*x + n*q*y;
+                    y = p*y + q*x;
+                    var factor = (a + x) / y;
+                    p = factor*y - p;
+                    q = Math.floor((n - p*p) / q);
+                    var b = (a + x) / y;
+                    if (i == 1) {
+                        result += "[" + p + ", " + q + "]";
+                    }
+                    else if (i % 2 == 0) {
+                        result += ", [" + p + ", " + q + "]";
+                    }
+                    else {
+                        result += ", [" + (b*p + 1) + ", " + (b*q) + "]";
+                    }
+                    if (p*p - n*q*q == 1) {
+                        break;
+                    }
+                }
+            }
+            
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
 </head>
 <body>
-	<h1>複素関数の孤立特異点と留数を計算する</h1>
-	<label for="function">複素関数：</label>
-	<input type="text" id="function" placeholder="例：(z^2+1)/(z-1)" size="30">
-	<button onclick="calculate()">計算</button>
-	<br>
-	<br>
-	<label for="output">結果：</label>
-	<textarea id="output" rows="10" cols="50" readonly></textarea>
+    <h1>Pell Equation Solver</h1>
+    <p>Enter a positive integer value for n:</p>
+    <input type="number" id="n" min="1" required>
+    <button type="button" onclick="solvePell()">Solve</button>
+    <p>The smallest solution for Pell equation x^2 - ny^2 = 1 is:</p>
+    <p id="result"></p>
 </body>
-<script>
-function calculate() {
-    // 入力された複素関数の取得
-    const funcInput = document.getElementById("function").value;
-    // 複素数の定義
-    const z1 = math.complex(1, 2); // 1 + 2i
-    const z2 = math.complex({ r: 3, phi: math.pi / 4 }); // 3e^(i*pi/4)
-    // 孤立特異点の検出
-    const singularities = math.numeric.findSingularities(funcInput);
-    let outputText = "孤立特異点: ";
-    if (singularities.length === 0) {
-        outputText += "ありません\n";
-    } else {
-        outputText += singularities.join(", ") + "\n";
-    }
-    // 留数の計算
-    let residue = [];
-    for (let i = 0; i < singularities.length; i++) {
-        residue[i] = math.complex(math.numeric.residue(funcInput, singularities[i]));
-    }
-    outputText += "留数: " + residue.join(", ") + "\n";
-    // 結果の出力
-    document.getElementById("output").value = outputText;
-}
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.3.2/math.js"></script>
 </html>
