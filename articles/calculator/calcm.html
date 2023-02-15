@@ -1,32 +1,57 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="ja">
+
+<head>
     <meta charset="UTF-8">
-    <title>2次正方行列の計算</title>
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>2次正方行列計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+
     <script src="matrix_calculator.js"></script>
-  </head>
-  <body>
-    <h1>2次正方行列の計算</h1>
-    <label for="matrix">行列の要素 (カンマで区切って入力)</label>
-    <input type="text" id="matrix" placeholder="1,2,3,4">
-    <br>
-    <button onclick="calculate()">計算する</button>
-    <br>
-    <label for="determinant">行列式</label>
-    <input type="text" id="determinant" readonly>
-    <br>
-    <label for="inverse">逆行列</label>
-    <input type="text" id="inverse" readonly>
-    <br>
-    <label for="rank">ランク</label>
-    <input type="text" id="rank" readonly>
-    <br>
-    <label for="power">累乗 (整数で入力)</label>
-    <input type="text" id="power" placeholder="2">
-    <br>
-    <button onclick="calculatePower()">累乗する</button>
-    <br>
-    <label for="poweredMatrix">累乗行列</label>
-    <input type="text" id="poweredMatrix" readonly>
-  </body>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>2次正方行列計算機</h1>
+            <label for="matrix">行列の要素 (カンマで区切って入力)</label>
+            <input type="text" id="matrix" placeholder="1,2,3,4">
+            <br>
+            <button onclick="calculate()">計算する</button>
+            <br>
+            <label for="determinant">行列式</label>
+            <input type="text" id="determinant" readonly>
+            <br>
+            <label for="inverse">逆行列</label>
+            <input type="text" id="inverse" readonly>
+            <br>
+            <label for="rank">ランク</label>
+            <input type="text" id="rank" readonly>
+            <br>
+            <label for="power">累乗 (整数で入力)</label>
+            <input type="text" id="power" placeholder="2">
+            <br>
+            <button onclick="calculatePower()">累乗する</button>
+            <br>
+            <label for="poweredMatrix">累乗行列</label>
+            <input type="text" id="poweredMatrix" readonly>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
