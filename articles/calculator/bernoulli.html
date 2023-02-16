@@ -1,62 +1,52 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Calculate Bernoulli Number v3</title>
-  </head>
-  <body>
-    <h1>Calculate Bernoulli Number</h1>
-    <label for="n">Enter the index of Bernoulli number:</label>
-    <input type="number" id="n">
-    <button onclick="calculate()">Calculate</button>
-    <p id="result"></p>
+    <title>ベルヌーイ数計算機</title>
     <script>
-      function calculate() {
-        let n = parseInt(document.getElementById("n").value);
-        let result = document.getElementById("result");
-        if (n < 0 || n % 1 !== 0) {
-          result.innerText = "Please enter a non-negative integer";
-          return;
-        }
-        if (n === 0) {
-          result.innerText = "1";
-          return;
-        }
-        let numerator = bernoulli(n);
-        let denominator = factorial(n);
-        result.innerText = numerator + "/" + denominator;
-      }
-
+      // ベルヌーイ数を計算する関数
       function bernoulli(n) {
-        let b = [1];
-        for (let m = 1; m <= n; m++) {
-          b[m] = 0;
-          for (let k = 0; k < m; k++) {
-            b[m] -= binomial(m + 1, k) * bernoulli(k) / (m - k + 1);
-          }
-        }
-        return b[n];
-      }
-
-      function factorial(n) {
+        // 初期値設定
         let result = 1;
-        for (let i = 2; i <= n; i++) {
-          result *= i;
+        let numerator = 1;
+
+        // ループを使用してベルヌーイ数を計算する
+        for (let m = 0; m < n; m++) {
+          numerator *= (n - m);
+          result += numerator / (m + 2);
         }
+
         return result;
       }
 
-      function binomial(n, k) {
-        if (k < 0 || k > n) {
-          return 0;
+      // フォームを送信する関数
+      function handleSubmit(event) {
+        event.preventDefault();
+        const input = document.getElementById("input-number");
+        const output = document.getElementById("output");
+        const n = parseInt(input.value);
+
+        if (isNaN(n) || n < 0) {
+          output.textContent = "無効な入力です";
+        } else {
+          const b = bernoulli(n);
+          output.textContent = `第${n}番目のベルヌーイ数は ${b} です`;
         }
-        let result = 1;
-        for (let i = 1; i <= k; i++) {
-          result *= n - i + 1;
-          result /= i;
-        }
-        return result;
+      }
+
+      // ページ読み込み時に実行する関数
+      window.onload = function() {
+        const form = document.getElementById("input-form");
+        form.addEventListener("submit", handleSubmit);
       }
     </script>
+  </head>
+  <body>
+    <h1>ベルヌーイ数計算機</h1>
+    <form id="input-form">
+      <label for="input-number">計算するベルヌーイ数の番号を入力してください:</label>
+      <input type="number" id="input-number" name="input-number" required>
+      <button type="submit">計算する</button>
+    </form>
+    <div id="output"></div>
   </body>
 </html>
