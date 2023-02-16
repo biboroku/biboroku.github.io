@@ -26,16 +26,24 @@
           result.innerText = "t";
           return;
         }
-        let t = "t";
-        let tMinusOne = "1";
+        let t = "1";
+        let tMinusOne = "t";
         let tMinusTwo = "0";
         for (let i = 2; i <= n; i++) {
-          let ti = `2*t*${t} - ${tMinusOne}`;
+          let ti = `${2}*t*${tMinusOne} - ${tMinusTwo}`;
           tMinusTwo = tMinusOne;
           tMinusOne = t;
           t = ti;
         }
-        result.innerText = t;
+        result.innerText = "t^" + n + ": " + t;
+        for (let i = n - 1; i >= 1; i--) {
+          let coefficient = eval(t.replace(/t/g, "1*x"));
+          result.innerText += ", t^" + i + ": " + coefficient + "*x^" + i;
+          t = tMinusOne;
+          tMinusOne = tMinusTwo;
+          tMinusTwo = `${2}*x*${tMinusOne} - ${t}`;
+        }
+        result.innerText += ", t^0: " + tMinusOne;
       }
     </script>
   </body>
