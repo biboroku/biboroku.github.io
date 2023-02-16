@@ -35,6 +35,11 @@
                 <input type="text" id="function-input" placeholder="関数を入力してください（例：sin(x)）" />
                 <button onclick="updateChart()">グラフを更新</button>
               </div>
+              <hr>
+              <h2>対応している演算子表</h2>
+              <p class="minmin">
+                +…加算<br>-…減算<br>*…乗算<br>/…除算<br>%…剰余<br>**…べき乗<br>&…論理積<br>|…論理和<br>^…
+              </p>
               <script>
                 // グラフを描画するための設定
                 var ctx = document.getElementById("myChart").getContext("2d");
