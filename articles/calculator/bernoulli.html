@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Nth Lucky Number Calculator</title>
-</head>
-<body>
-	<h1>Nth Lucky Number Calculator</h1>
-	<p>Enter the value of n to calculate the nth lucky number:</p>
-	<input type="number" id="input-number" placeholder="Enter n">
-	<button type="button" onclick="calculateLuckyNumber()">Calculate</button>
-	<p id="output-text"></p>
+  <head>
+    <title>n番目の幸運数を計算する</title>
+  </head>
+  <body>
+    <h1>n番目の幸運数を計算する</h1>
+    <p>
+      n: <input type="number" id="n" value="1" />
+      <button onclick="calculate()">計算する</button>
+    </p>
+    <p id="result"></p>
+    <script>
+      function isLucky(n) {
+        let seen = new Set();
+        while (n > 0) {
+          let digit = n % 10;
+          if (seen.has(digit)) {
+            return false;
+          }
+          seen.add(digit);
+          n = Math.floor(n / 10);
+        }
+        return true;
+      }
 
-	<script>
-		function calculateLuckyNumber() {
-			let n = parseInt(document.getElementById("input-number").value);
-			let luckyNumbers = [1];
-			let currentIndex = 0;
-
-			for (let i = 2; i <= n; i++) {
-				if (currentIndex >= luckyNumbers.length) {
-					currentIndex = 0;
-				}
-				let removeIndex = currentIndex;
-				while (removeIndex < luckyNumbers.length) {
-					luckyNumbers.splice(removeIndex, 1);
-					removeIndex += currentIndex + 1;
-				}
-				currentIndex++;
-				luckyNumbers.push(i);
-			}
-
-			document.getElementById("output-text").innerHTML = "The " + n + "th lucky number is: " + luckyNumbers[n - 1];
-		}
-	</script>
-</body>
+      function calculate() {
+        let n = parseInt(document.getElementById("n").value);
+        let count = 0;
+        let i = 1;
+        while (count < n) {
+          if (isLucky(i)) {
+            count++;
+          }
+          i++;
+        }
+        let result = document.getElementById("result");
+        result.textContent = `n番目の幸運数は ${i-1} です。`;
+      }
+    </script>
+  </body>
 </html>
