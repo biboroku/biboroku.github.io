@@ -1,61 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Nth Perfect Totient Number Calculator</title>
-  </head>
-  <body>
-    <h1>Nth Perfect Totient Number Calculator</h1>
-    <label for="input-n">Enter the value of n:</label>
-    <input type="number" id="input-n" name="input-n" min="1">
-    <button onclick="calculate()">Calculate</button>
-    <p id="result"></p>
-<script>
-    function calculate() {
-  const n = document.getElementById("input-n").value;
+<head>
+	<title>Nth Lucky Number Calculator</title>
+</head>
+<body>
+	<h1>Nth Lucky Number Calculator</h1>
+	<p>Enter the value of n to calculate the nth lucky number:</p>
+	<input type="number" id="input-number" placeholder="Enter n">
+	<button type="button" onclick="calculateLuckyNumber()">Calculate</button>
+	<p id="output-text"></p>
 
-  if (n < 1 || isNaN(n)) {
-    document.getElementById("result").innerHTML = "Please enter a valid positive integer value for n.";
-  } else {
-    const result = getNthPerfectTotientNumber(n);
-    document.getElementById("result").innerHTML = `The ${n}th perfect totient number is ${result}.`;
-  }
-}
+	<script>
+		function calculateLuckyNumber() {
+			let n = parseInt(document.getElementById("input-number").value);
+			let luckyNumbers = [1];
+			let currentIndex = 0;
 
-function getNthPerfectTotientNumber(n) {
-  let count = 0;
-  let num = 1;
+			for (let i = 2; i <= n; i++) {
+				if (currentIndex >= luckyNumbers.length) {
+					currentIndex = 0;
+				}
+				let removeIndex = currentIndex;
+				while (removeIndex < luckyNumbers.length) {
+					luckyNumbers.splice(removeIndex, 1);
+					removeIndex += currentIndex + 1;
+				}
+				currentIndex++;
+				luckyNumbers.push(i);
+			}
 
-  while (count < n) {
-    if (isPerfectTotient(num)) {
-      count++;
-    }
-    num++;
-  }
-
-  return num - 1;
-}
-
-function isPerfectTotient(num) {
-  let totient = num;
-  let i = 2;
-
-  while (i * i <= num) {
-    if (num % i === 0) {
-      totient = totient / i * (i - 1);
-      while (num % i === 0) {
-        num = num / i;
-      }
-    }
-    i++;
-  }
-
-  if (num > 1) {
-    totient = totient / num * (num - 1);
-  }
-
-  return totient === num;
-}
-
-</script>
-  </body>
+			document.getElementById("output-text").innerHTML = "The " + n + "th lucky number is: " + luckyNumbers[n - 1];
+		}
+	</script>
+</body>
 </html>
