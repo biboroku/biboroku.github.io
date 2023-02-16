@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ベルヌーイ数計算機</title>
-    <script>
-      // ベルヌーイ数を計算する関数
-      function bernoulli(n) {
-        // 初期値設定
-        let result = 1;
-        let numerator = 1;
-
-        // ループを使用してベルヌーイ数を計算する
-        for (let m = 0; m < n; m++) {
-          numerator *= (n - m);
-          result += numerator / (m + 2);
-        }
-
-        return result;
-      }
-
-      // フォームを送信する関数
-      function handleSubmit(event) {
-        event.preventDefault();
-        const input = document.getElementById("input-number");
-        const output = document.getElementById("output");
-        const n = parseInt(input.value);
-
-        if (isNaN(n) || n < 0) {
-          output.textContent = "無効な入力です";
-        } else {
-          const b = bernoulli(n);
-          output.textContent = `第${n}番目のベルヌーイ数は ${b} です`;
-        }
-      }
-
-      // ページ読み込み時に実行する関数
-      window.onload = function() {
-        const form = document.getElementById("input-form");
-        form.addEventListener("submit", handleSubmit);
-      }
-    </script>
+    <title>Nth Perfect Totient Number Calculator</title>
   </head>
   <body>
-    <h1>ベルヌーイ数計算機</h1>
-    <form id="input-form">
-      <label for="input-number">計算するベルヌーイ数の番号を入力してください:</label>
-      <input type="number" id="input-number" name="input-number" required>
-      <button type="submit">計算する</button>
-    </form>
-    <div id="output"></div>
+    <h1>Nth Perfect Totient Number Calculator</h1>
+    <label for="input-n">Enter the value of n:</label>
+    <input type="number" id="input-n" name="input-n" min="1">
+    <button onclick="calculate()">Calculate</button>
+    <p id="result"></p>
+<script>
+    function calculate() {
+  const n = document.getElementById("input-n").value;
+
+  if (n < 1 || isNaN(n)) {
+    document.getElementById("result").innerHTML = "Please enter a valid positive integer value for n.";
+  } else {
+    const result = getNthPerfectTotientNumber(n);
+    document.getElementById("result").innerHTML = `The ${n}th perfect totient number is ${result}.`;
+  }
+}
+
+function getNthPerfectTotientNumber(n) {
+  let count = 0;
+  let num = 1;
+
+  while (count < n) {
+    if (isPerfectTotient(num)) {
+      count++;
+    }
+    num++;
+  }
+
+  return num - 1;
+}
+
+function isPerfectTotient(num) {
+  let totient = num;
+  let i = 2;
+
+  while (i * i <= num) {
+    if (num % i === 0) {
+      totient = totient / i * (i - 1);
+      while (num % i === 0) {
+        num = num / i;
+      }
+    }
+    i++;
+  }
+
+  if (num > 1) {
+    totient = totient / num * (num - 1);
+  }
+
+  return totient === num;
+}
+
+</script>
   </body>
 </html>
