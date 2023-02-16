@@ -5,11 +5,12 @@
     <title>Calculate Bernoulli Number</title>
   </head>
   <body>
-    <h1>Calculate Bernoulli Number</h1>
+    <h1>Calculate Bernoulli Number v2</h1>
     <label for="n">Enter the index of Bernoulli number:</label>
     <input type="number" id="n">
     <button onclick="calculate()">Calculate</button>
     <p id="result"></p>
+    <script src="https://unpkg.com/fraction.js"></script>
     <script>
       function calculate() {
         let n = document.getElementById("n").value;
@@ -22,26 +23,19 @@
           result.innerText = "1";
           return;
         }
-        let numerators = [1];
-        for (let m = 1; m <= n; m++) {
-          let nextNumerator = 0;
-          for (let k = 0; k < m; k++) {
-            nextNumerator += choose(m + 1, k) * numerators[k];
+        let numerator = [1];
+        let denominator = [1];
+        for (let k = 1; k <= n; k++) {
+          numerator.unshift(0);
+          for (let j = 0; j < k; j++) {
+            numerator[j] = numerator[j].add(denominator[j]);
           }
-          numerators.push(-nextNumerator / (m + 1));
+          for (let j = 1; j <= k; j++) {
+            denominator[j] = denominator[j].add(denominator[j - 1]);
+          }
         }
-        result.innerText = numerators[numerators.length - 1];
-      }
-      
-      function choose(n, k) {
-        if (k < 0 || k > n) {
-          return 0;
-        }
-        let result = 1;
-        for (let i = 1; i <= k; i++) {
-          result *= (n - i + 1) / i;
-        }
-        return result;
+        let bernoulliNumber = new Fraction(numerator[0], denominator[0]);
+        result.innerText = `B${n} = ${bernoulliNumber.toFraction()}`;
       }
     </script>
   </body>
