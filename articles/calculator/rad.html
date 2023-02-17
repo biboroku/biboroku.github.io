@@ -1,33 +1,59 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>自然数の根基を計算する</title>
-  </head>
-  <body>
-    <h1>バージョン1</h1>
-    <label>自然数を入力してください: <input id="input-number" type="number" min="1"></label>
-    <button onclick="calculate()">計算する</button>
-    <p id="result"></p>
-    <script>
-      function factorize(number) {
-        let factors = [];
-        for (let i = 2; i <= number; i++) {
-          while (number % i === 0) {
-            factors.push(i);
-            number /= i;
-          }
-        }
-        return factors;
-      }
-      
-      function calculate() {
-        const inputNumber = document.getElementById("input-number").value;
-        const factors = factorize(inputNumber);
-        const uniqueFactors = [...new Set(factors)]; // 素因数の重複を除く
-        const rootBase = uniqueFactors.reduce((product, factor) => product * factor, 1);
-        const resultElement = document.getElementById("result");
-        resultElement.textContent = `自然数 ${inputNumber} の根基は ${rootBase} です。`;
-      }
-    </script>
-  </body>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>根基計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+</head>
+
+<body>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>根基計算機</h1>
+            <p class="minmin">数論における重要な関数.<br>ABC予想にも登場します.</p>
+            <label class="minmin">自然数を入力してください: <input id="input-number" type="number" min="1"></label>
+            <button onclick="calculate()">計算する</button>
+            <p id="result"></p>
+            <script>
+              function factorize(number) {
+                let factors = [];
+                for (let i = 2; i <= number; i++) {
+                  while (number % i === 0) {
+                    factors.push(i);
+                    number /= i;
+                  }
+                }
+                return factors;
+              }
+              
+              function calculate() {
+                const inputNumber = document.getElementById("input-number").value;
+                const factors = factorize(inputNumber);
+                const uniqueFactors = [...new Set(factors)]; // 素因数の重複を除く
+                const rootBase = uniqueFactors.reduce((product, factor) => product * factor, 1);
+                const resultElement = document.getElementById("result");
+                resultElement.textContent = `自然数 ${inputNumber} の根基は ${rootBase} です。`;
+              }
+            </script>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
