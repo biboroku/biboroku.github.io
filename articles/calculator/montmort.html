@@ -1,41 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-	<title>Montmort数を計算する</title>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>攪乱順列総数計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
 </head>
+
 <body>
-	<h1>Montmort数を計算する</h1>
-
-	<form>
-		<label for="n">整数nを入力してください：</label>
-		<input type="number" id="n" name="n">
-		<button type="button" onclick="calculateMontmort()">計算する</button>
-	</form>
-
-	<p id="result"></p>
-
-	<script>
-		function calculateMontmort() {
-			var n = parseInt(document.getElementById("n").value);
-			var montmort = 0;
-
-			if (n <= 1) {
-				montmort = 0;
-			} else if (n == 2) {
-				montmort = 1;
-			} else {
-				var prev1 = 0;
-				var prev2 = 1;
-
-				for (var i = 3; i <= n; i++) {
-					montmort = (i - 1) * (prev1 + prev2);
-					prev1 = prev2;
-					prev2 = montmort;
-				}
-			}
-
-			document.getElementById("result").innerHTML = "Montmort数は " + montmort + " です。";
-		}
-	</script>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>攪乱順列総数計算機</h1>
+            <p class="minmin">
+                モンモール数とも呼ばれます.<br>
+                !nのように階乗を逆転させたような表記もあります.
+            </p>
+            <form class="minmin">
+                <label for="n">整数を入力してください：</label>
+                <input type="number" id="n" name="n">
+                <button type="button" onclick="calculateMontmort()">計算する</button>
+            </form>
+        
+            <p id="result"></p>
+        
+            <script>
+                function calculateMontmort() {
+                    var n = parseInt(document.getElementById("n").value);
+                    var montmort = 0;
+        
+                    if (n <= 1) {
+                        montmort = 0;
+                    } else if (n == 2) {
+                        montmort = 1;
+                    } else {
+                        var prev1 = 0;
+                        var prev2 = 1;
+        
+                        for (var i = 3; i <= n; i++) {
+                            montmort = (i - 1) * (prev1 + prev2);
+                            prev1 = prev2;
+                            prev2 = montmort;
+                        }
+                    }
+        
+                    document.getElementById("result").innerHTML = "Montmort数は " + montmort + " です。";
+                }
+            </script>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
