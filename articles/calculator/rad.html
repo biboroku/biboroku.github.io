@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Radical Calculator</title>
-    <script>
-      function calculateRadical() {
-        // Get the input value
-        const input = document.getElementById("number").value;
-        
-        // Find the prime factorization
-        let factors = [];
-        let divisor = 2;
-        while (input > 1) {
-          if (input % divisor === 0) {
-            factors.push(divisor);
-            input = input / divisor;
-          } else {
-            divisor++;
-          }
-        }
-        
-        // Calculate the radical
-        const radical = factors.reduce((a, b) => a + b, 0);
-        
-        // Display the result
-        document.getElementById("output").innerHTML = "The radical of " + document.getElementById("number").value + " is " + radical;
-      }
-    </script>
+    <title>自然数の根基を計算する</title>
   </head>
   <body>
-    <h1>Radical Calculator</h1>
-    <label for="number">Enter a positive integer:</label>
-    <input type="number" id="number" name="number">
-    <button onclick="calculateRadical()">Calculate</button>
-    <p id="output"></p>
+    <h1>バージョン1</h1>
+    <label>自然数を入力してください: <input id="input-number" type="number" min="1"></label>
+    <button onclick="calculate()">計算する</button>
+    <p id="result"></p>
+    <script>
+      function factorize(number) {
+        let factors = [];
+        for (let i = 2; i <= number; i++) {
+          while (number % i === 0) {
+            factors.push(i);
+            number /= i;
+          }
+        }
+        return factors;
+      }
+      
+      function calculate() {
+        const inputNumber = document.getElementById("input-number").value;
+        const factors = factorize(inputNumber);
+        const uniqueFactors = [...new Set(factors)]; // 素因数の重複を除く
+        const rootBase = uniqueFactors.reduce((product, factor) => product * factor, 1);
+        const resultElement = document.getElementById("result");
+        resultElement.textContent = `自然数 ${inputNumber} の根基は ${rootBase} です。`;
+      }
+    </script>
   </body>
 </html>
