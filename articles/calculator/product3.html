@@ -4,7 +4,7 @@
 	<title>数列の総乗を計算する</title>
 </head>
 <body>
-	<h1>数列の総乗を計算するv2</h1>
+	<h1>数列の総乗を計算するv3</h1>
 	<p>数列の式, 初項, 末項を入力してください。</p>
 	<form>
 		<label for="formula">数列の式:</label>
@@ -34,7 +34,7 @@
 			const lastTerm = parseInt(document.getElementById("last-term").value);
 
 			// 数列の式を評価する関数を作成
-			const evaluateFormula = new Function("n", "return " + formula.replace(/\^/g, "power"));
+			const evaluateFormula = new Function("n", "return " + formula.replace(/([a-zA-Z]+)\^(\d+)/g, "power($1, $2)"));
 
 			// 総乗を計算する
 			let product = 1;
