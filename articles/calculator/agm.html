@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>算術幾何平均の計算</title>
-</head>
-<body>
-	<label for="num1">1つ目の数を入力してください：</label>
-	<input type="number" id="num1">
-	<br>
-	<label for="num2">2つ目の数を入力してください：</label>
-	<input type="number" id="num2">
-	<br>
-	<button onclick="calculate()">計算する</button>
-	<br>
-	<label for="result">算術幾何平均：</label>
-	<input type="number" id="result" readonly>
-	<script>
-		function calculate() {
-			// 入力フィールドの値を取得する
-			var num1 = parseFloat(document.getElementById("num1").value);
-			var num2 = parseFloat(document.getElementById("num2").value);
-
-			// 算術平均を計算する
-			var arithmetic_mean = (num1 + num2) / 2;
-
-			// 幾何平均を計算する
-			var geometric_mean = Math.sqrt(num1 * num2);
-
-			// 算術幾何平均を計算する
-			var arithmetic_geometric_mean = 2 * geometric_mean * arithmetic_mean / (geometric_mean + arithmetic_mean);
-
-			// 結果を表示する
-			document.getElementById("result").value = arithmetic_geometric_mean;
-		}
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Arithmetic-Geometric Mean</title>
+  </head>
+  <body>
+    <label for="num1">Number 1: </label>
+    <input type="number" id="num1" name="num1">
+    <br>
+    <label for="num2">Number 2: </label>
+    <input type="number" id="num2" name="num2">
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <br>
+    <p id="result"></p>
+    <script>
+      function calculate() {
+        let num1 = parseFloat(document.getElementById("num1").value);
+        let num2 = parseFloat(document.getElementById("num2").value);
+        let arith_mean = (num1 + num2) / 2;
+        let geo_mean = Math.sqrt(num1 * num2);
+        for (let i = 0; i < 10000; i++) {
+          arith_mean = (arith_mean + geo_mean) / 2;
+          geo_mean = Math.sqrt(arith_mean * geo_mean);
+        }
+        document.getElementById("result").innerHTML = "Arithmetic-Geometric Mean: " + arith_mean.toFixed(6);
+      }
+    </script>
+  </body>
 </html>
