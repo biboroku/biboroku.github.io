@@ -2,6 +2,42 @@
 <html>
 <head>
 	<title>Radical Calculator</title>
+    <script>
+function calculate() {
+  // Get the input value
+  const input = document.getElementById("input").value;
+
+  // Convert the input to a positive integer
+  const n = Math.abs(Math.floor(Number(input)));
+
+  // Find the prime factors of n
+  const factors = primeFactors(n);
+
+  // Calculate the radical of n
+  const radical = factors.reduce((product, factor) => product * factor, 1);
+
+  // Display the result
+  const output = document.getElementById("output");
+  output.textContent = `The radical of ${n} is ${radical}.`;
+}
+
+function primeFactors(n) {
+  const factors = [];
+  let divisor = 2;
+
+  while (n > 2) {
+    if (n % divisor === 0) {
+      factors.push(divisor);
+      n /= divisor;
+    } else {
+      divisor++;
+    }
+  }
+
+  return factors;
+}
+
+    </script>
 </head>
 <body>
 	<h1>Radical Calculator</h1>
@@ -9,6 +45,5 @@
 	<input type="number" id="input">
 	<button onclick="calculate()">Calculate</button>
 	<p id="output"></p>
-	<script src="radical.js"></script>
 </body>
 </html>
