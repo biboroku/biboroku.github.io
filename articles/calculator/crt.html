@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>互いに素な剰余系における数を求める</title>
+    <title>連立合同式を解く</title>
   </head>
   <body>
-    <h1>互いに素な剰余系における数を求める</h1>
+    <h1>連立合同式を解く</h1>
     <form>
-      <label for="modulus1">第1剰余系の法</label>
-      <input type="number" id="modulus1" name="modulus1"><br>
+      <label for="remainder1">x ≡</label>
+      <input type="number" id="remainder1" name="remainder1">
+      <label for="modulus1">(mod</label>
+      <input type="number" id="modulus1" name="modulus1">
+      <label for="m1">)</label>
+      <br>
 
-      <label for="remainder1">第1剰余系の剰余</label>
-      <input type="number" id="remainder1" name="remainder1"><br>
-
-      <label for="modulus2">第2剰余系の法</label>
-      <input type="number" id="modulus2" name="modulus2"><br>
-
-      <label for="remainder2">第2剰余系の剰余</label>
-      <input type="number" id="remainder2" name="remainder2"><br>
+      <label for="remainder2">x ≡</label>
+      <input type="number" id="remainder2" name="remainder2">
+      <label for="modulus2">(mod</label>
+      <input type="number" id="modulus2" name="modulus2">
+      <label for="m2">)</label>
+      <br>
 
       <button type="button" onclick="calculate()">計算する</button>
     </form>
@@ -25,10 +27,10 @@
 
     <script>
       function calculate() {
-        const modulus1 = parseInt(document.getElementById("modulus1").value);
         const remainder1 = parseInt(document.getElementById("remainder1").value);
-        const modulus2 = parseInt(document.getElementById("modulus2").value);
+        const modulus1 = parseInt(document.getElementById("modulus1").value);
         const remainder2 = parseInt(document.getElementById("remainder2").value);
+        const modulus2 = parseInt(document.getElementById("modulus2").value);
 
         const gcd = calculateGCD(modulus1, modulus2);
 
@@ -37,8 +39,8 @@
           return;
         }
 
-        const result = calculateSolution(modulus1, remainder1, modulus2, remainder2);
-        document.getElementById("result").innerText = `求める数は ${result} です。`;
+        const result = calculateSolution(remainder1, modulus1, remainder2, modulus2);
+        document.getElementById("result").innerText = `求める数は x ≡ ${result} (mod ${modulus1 * modulus2}) です。`;
       }
 
       function calculateGCD(a, b) {
@@ -49,7 +51,7 @@
         return calculateGCD(b, a % b);
       }
 
-      function calculateSolution(modulus1, remainder1, modulus2, remainder2) {
+      function calculateSolution(remainder1, modulus1, remainder2, modulus2) {
         const coefficient2 = calculateModularInverse(modulus1, modulus2);
         const coefficient1 = (remainder1 - remainder2 * coefficient2) % modulus1;
 
