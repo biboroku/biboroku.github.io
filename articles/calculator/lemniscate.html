@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>レムニスケートの周長と面積を計算する</title>
+  </head>
+  <body>
+    <h1>レムニスケートの周長と面積を計算する</h1>
+    <p>定数aを入力してください：</p>
+    <input type="number" id="radius">
+    <button onclick="calculate()">計算</button>
+    <p id="result"></p>
+
+    <script>
+      function calculate() {
+        const a = Number(document.getElementById("radius").value);
+        const perimeter = 2 * a ** 2;
+        const area = Math.sqrt(2 * Math.PI) * a * 3.625609908221908311931 / 1.225416702465177645129;
+        document.getElementById("result").textContent = `周長: ${perimeter}, 面積: ${area}`;
+      }
+    </script>
+  </body>
+</html>
