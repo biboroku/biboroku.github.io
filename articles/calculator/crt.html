@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>互いに素な剰余系における数を求める</title>
+  </head>
+  <body>
+    <h1>互いに素な剰余系における数を求める</h1>
+    <form>
+      <label for="modulus1">第1剰余系の法</label>
+      <input type="number" id="modulus1" name="modulus1"><br>
+
+      <label for="remainder1">第1剰余系の剰余</label>
+      <input type="number" id="remainder1" name="remainder1"><br>
+
+      <label for="modulus2">第2剰余系の法</label>
+      <input type="number" id="modulus2" name="modulus2"><br>
+
+      <label for="remainder2">第2剰余系の剰余</label>
+      <input type="number" id="remainder2" name="remainder2"><br>
+
+      <button type="button" onclick="calculate()">計算する</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+      function calculate() {
+        const modulus1 = parseInt(document.getElementById("modulus1").value);
+        const remainder1 = parseInt(document.getElementById("remainder1").value);
+        const modulus2 = parseInt(document.getElementById("modulus2").value);
+        const remainder2 = parseInt(document.getElementById("remainder2").value);
+
+        const gcd = calculateGCD(modulus1, modulus2);
+
+        if (gcd !== 1) {
+          document.getElementById("result").innerText = "両方の法が互いに素ではありません。";
+          return;
+        }
+
+        const result = calculateSolution(modulus1, remainder1, modulus2, remainder2);
+        document.getElementById("result").innerText = `求める数は ${result} です。`;
+      }
+
+      function calculateGCD(a, b) {
+        if (b === 0) {
+          return a;
+        }
+
+        return calculateGCD(b, a % b);
+      }
+
+      function calculateSolution(modulus1, remainder1, modulus2, remainder2) {
+        const coefficient2 = calculateModularInverse(modulus1, modulus2);
+        const coefficient1 = (remainder1 - remainder2 * coefficient2) % modulus1;
+
+        if (coefficient1 < 0) {
+          coefficient1 += modulus1;
+        }
+
+        return (remainder2 * modulus1 * coefficient1 + remainder1 * modulus2 * coefficient2) % (modulus1 * modulus2);
+      }
+
+      function calculateModularInverse(a, m) {
+        let b = m;
+        let x = 1;
+        let y = 0;
+
+        while (a > 1) {
+          const q = Math.floor(a / b);
+          const tmp = b;
+          b = a % b;
+          a = tmp;
+
+          const tmp2 = y;
+          y = x - q * y;
+          x = tmp2;
+        }
+
+        if (x < 0) {
+          x += m;
+        }
+
+        return x;
+      }
+    </script>
+  </body>
+</html>
