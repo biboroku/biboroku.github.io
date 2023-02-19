@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculate expression</title>
+</head>
+<body>
+	<label for="input-n">Enter a natural number n: </label>
+	<input type="number" id="input-n">
+	<button onclick="calculate()">Calculate</button>
+	<p id="result"></p>
+
+	<script>
+		function calculate() {
+			// Get input value
+			const n = document.getElementById("input-n").value;
+
+			// Compute result
+			const result = 1 + ((-Math.pow(2, n) + 2) / Math.pow(3, n-1));
+
+			// Display result
+			document.getElementById("result").textContent = `Result: ${result}`;
+		}
+	</script>
+</body>
+</html>
