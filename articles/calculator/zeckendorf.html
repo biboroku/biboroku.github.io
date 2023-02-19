@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zeilberger's Algorithm</title>
+	<script>
+		function getZeckendorfSum() {
+			// Retrieve user input from HTML input field
+			var input = document.getElementById("input").value;
+
+			// Convert input to an integer and check if it is a positive number
+			var n = parseInt(input);
+			if (n <= 0) {
+				alert("Please enter a positive integer.");
+				return;
+			}
+
+			// Compute Zeckendorf's representation of n and the sum of its terms
+			var fib = [1, 2];  // First two Fibonacci numbers
+			var zeck = [];  // Zeckendorf's representation of n
+			var sum = 0;  // Sum of terms in Zeckendorf's representation
+
+			// Find the largest Fibonacci number that is less than or equal to n
+			var i = fib.length - 1;
+			while (fib[i] <= n) {
+				i++;
+				fib.push(fib[i - 1] + fib[i - 2]);
+			}
+
+			// Compute Zeckendorf's representation of n and its sum
+			while (n > 0) {
+				// Find the largest Fibonacci number that is less than or equal to n
+				while (fib[i] > n) {
+					i--;
+				}
+
+				// Add the corresponding term to Zeckendorf's representation and its sum
+				zeck.push(fib[i]);
+				sum += fib[i];
+				n -= fib[i];
+			}
+
+			// Display Zeckendorf's representation and its sum in the HTML output field
+			var output = document.getElementById("output");
+			output.innerHTML = "Zeckendorf's representation: " + zeck.join(" + ") + "<br>";
+			output.innerHTML += "Sum of terms: " + sum;
+		}
+	</script>
+</head>
+<body>
+	<h1>Zeilberger's Algorithm</h1>
+	<p>Enter a positive integer:</p>
+	<input type="text" id="input">
+	<br>
+	<button onclick="getZeckendorfSum()">Compute</button>
+	<p id="output"></p>
+</body>
+</html>
