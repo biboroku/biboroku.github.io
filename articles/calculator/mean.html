@@ -1,39 +1,63 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>平均を計算する</title>
-  </head>
-  <body>
-    <h1>平均を計算する</h1>
-    <p>数列を入力してください（カンマで区切ってください）:</p>
-    <input type="text" id="numbers" />
-    <br />
-    <button onclick="calculate()">計算する</button>
-    <br />
-    <p>算術平均: <span id="arithmeticMean"></span></p>
-    <p>幾何平均: <span id="geometricMean"></span></p>
-    <p>調和平均: <span id="harmonicMean"></span></p>
-    <script>
-      function calculate() {
-        var numbers = document.getElementById("numbers").value.split(",");
-        var sum = 0;
-        var product = 1;
-        var reciprocalSum = 0;
+<html lang="ja">
 
-        for (var i = 0; i < numbers.length; i++) {
-          sum += parseFloat(numbers[i]);
-          product *= parseFloat(numbers[i]);
-          reciprocalSum += 1 / parseFloat(numbers[i]);
-        }
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>多変数算術幾何調和平均計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+</head>
 
-        var arithmeticMean = sum / numbers.length;
-        var geometricMean = Math.pow(product, 1 / numbers.length);
-        var harmonicMean = numbers.length / reciprocalSum;
-
-        document.getElementById("arithmeticMean").innerHTML = arithmeticMean;
-        document.getElementById("geometricMean").innerHTML = geometricMean;
-        document.getElementById("harmonicMean").innerHTML = harmonicMean;
-      }
-    </script>
-  </body>
+<body>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>多変数算術/幾何/調和平均計算機</h1>
+            <input type="text" id="numbers" />
+            <br />
+            <button onclick="calculate()">計算する</button>
+            <br />
+            <p>算術平均: <span id="arithmeticMean"></span></p>
+            <p>幾何平均: <span id="geometricMean"></span></p>
+            <p>調和平均: <span id="harmonicMean"></span></p>
+            <script>
+              function calculate() {
+                var numbers = document.getElementById("numbers").value.split(",");
+                var sum = 0;
+                var product = 1;
+                var reciprocalSum = 0;
+        
+                for (var i = 0; i < numbers.length; i++) {
+                  sum += parseFloat(numbers[i]);
+                  product *= parseFloat(numbers[i]);
+                  reciprocalSum += 1 / parseFloat(numbers[i]);
+                }
+        
+                var arithmeticMean = sum / numbers.length;
+                var geometricMean = Math.pow(product, 1 / numbers.length);
+                var harmonicMean = numbers.length / reciprocalSum;
+        
+                document.getElementById("arithmeticMean").innerHTML = arithmeticMean;
+                document.getElementById("geometricMean").innerHTML = geometricMean;
+                document.getElementById("harmonicMean").innerHTML = harmonicMean;
+              }
+            </script>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
