@@ -1,8 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-	<title>Zeilberger's Algorithm</title>
-	<script>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>ゼッケンドルフ表現計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+    <script>
 		function getZeckendorfSum() {
 			// Retrieve user input from HTML input field
 			var input = document.getElementById("input").value;
@@ -46,12 +62,20 @@
 		}
 	</script>
 </head>
+
 <body>
-	<h1>Zeilberger's Algorithm</h1>
-	<p>Enter a positive integer:</p>
-	<input type="text" id="input">
-	<br>
-	<button onclick="getZeckendorfSum()">Compute</button>
-	<p id="output"></p>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>ゼッケンドルフ表現計算機</h1>
+            <p class="minmin">あらゆる自然数は異なる連続しないフィボナッチ数の和によって表せる. by Edouard Zeckendorf</p>
+            <input type="text" id="input">
+            <br>
+            <button onclick="getZeckendorfSum()">計算</button>
+            <p id="output"></p>
+        </div>
 </body>
-</html>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
