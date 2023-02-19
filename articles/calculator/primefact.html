@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>素数階乗計算機</title>
+  </head>
+  <body>
+    <h1>素数階乗計算機</h1>
+    <p>自然数nを入力してください：</p>
+    <input type="number" id="input-number">
+    <button onclick="calculate()">計算</button>
+    <p id="output"></p>
+
+    <script>
+      function calculate() {
+        const n = document.getElementById("input-number").value;
+        let primes = [];
+
+        // 素数を求める
+        for (let i = 2; i <= n; i++) {
+          let isPrime = true;
+          for (let j = 2; j <= Math.sqrt(i); j++) {
+            if (i % j === 0) {
+              isPrime = false;
+              break;
+            }
+          }
+          if (isPrime) {
+            primes.push(i);
+          }
+        }
+
+        // 素数階乗を計算する
+        let result = 1;
+        for (let prime of primes) {
+          let p = prime;
+          while (p <= n) {
+            p *= prime;
+          }
+          result *= p / prime;
+        }
+
+        // 結果を表示する
+        const outputElement = document.getElementById("output");
+        outputElement.textContent = n + "# = " + result;
+      }
+    </script>
+  </body>
+</html>
