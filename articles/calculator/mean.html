@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>平均を計算する</title>
+  </head>
+  <body>
+    <h1>平均を計算する</h1>
+    <p>数列を入力してください（カンマで区切ってください）:</p>
+    <input type="text" id="numbers" />
+    <br />
+    <button onclick="calculate()">計算する</button>
+    <br />
+    <p>算術平均: <span id="arithmeticMean"></span></p>
+    <p>幾何平均: <span id="geometricMean"></span></p>
+    <p>調和平均: <span id="harmonicMean"></span></p>
+    <script>
+      function calculate() {
+        var numbers = document.getElementById("numbers").value.split(",");
+        var sum = 0;
+        var product = 1;
+        var reciprocalSum = 0;
+
+        for (var i = 0; i < numbers.length; i++) {
+          sum += parseFloat(numbers[i]);
+          product *= parseFloat(numbers[i]);
+          reciprocalSum += 1 / parseFloat(numbers[i]);
+        }
+
+        var arithmeticMean = sum / numbers.length;
+        var geometricMean = Math.pow(product, 1 / numbers.length);
+        var harmonicMean = numbers.length / reciprocalSum;
+
+        document.getElementById("arithmeticMean").innerHTML = arithmeticMean;
+        document.getElementById("geometricMean").innerHTML = geometricMean;
+        document.getElementById("harmonicMean").innerHTML = harmonicMean;
+      }
+    </script>
+  </body>
+</html>
