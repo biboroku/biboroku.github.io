@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>体感温度計算</title>
+  </head>
+  <body>
+    <h1>体感温度計算</h1>
+    <form>
+      <label for="temp">気温(℃):</label>
+      <input type="number" id="temp" name="temp"><br>
+
+      <label for="wind">風速(m/s):</label>
+      <input type="number" id="wind" name="wind"><br>
+
+      <label for="humidity">相対湿度(%):</label>
+      <input type="number" id="humidity" name="humidity"><br>
+
+      <label for="radiation">放射照度(W/m²):</label>
+      <input type="number" id="radiation" name="radiation"><br>
+
+      <button type="button" onclick="calculate()">計算</button><br><br>
+
+      <label for="result">体感温度(℃):</label>
+      <input type="text" id="result" name="result" readonly>
+    </form>
+
+    <script>
+      function calculate() {
+        var temp = parseFloat(document.getElementById("temp").value);
+        var wind = parseFloat(document.getElementById("wind").value);
+        var humidity = parseFloat(document.getElementById("humidity").value);
+        var radiation = parseFloat(document.getElementById("radiation").value);
+
+        var t = temp;
+        var h = humidity;
+        var v = wind;
+        var q = radiation;
+
+        var result = t + 0.348 * (6.105 * h / 100 * Math.exp((17.27 * t) / (237.7 + t))) - 0.7 * v + 0.7 * q / (v + 10) - 4.25;
+
+        document.getElementById("result").value = result.toFixed(1);
+      }
+    </script>
+  </body>
+</html>
