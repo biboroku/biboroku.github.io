@@ -13,7 +13,7 @@
     
     <script>
       function calculate() {
-        const n = parseInt(document.getElementById('n').value);
+        let n = parseInt(document.getElementById('n').value);
         if (isNaN(n) || n < 1) {
           document.getElementById('result').innerHTML = "Please enter a positive integer.";
           return;
