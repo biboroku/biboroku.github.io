@@ -1,98 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-	<title>物質量計算機</title>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>モル質量計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
 </head>
+
 <body>
-	<h1>物質量計算機</h1>
-	<p>分子式を入力してください(カッコは展開してすべての原子に対して係数を明示してください):</p>
-	<input type="text" id="formulaInput" placeholder="例)H2O,NaCl">
-	<button onclick="calculateMolecularWeight()">Calculate</button>
-	<p id="result"></p>
-
-	<script>
-		function calculateMolecularWeight() {
-			const formula = document.getElementById("formulaInput").value;
-			const elementRegex = /([A-Z][a-z]*)(\d*)|(\()|(\))(\d*)/g;
-			let totalWeight = 0;
-			let match;
-			let currentMultiplier = 1;
-			const stack = [];
-
-			while (match = elementRegex.exec(formula)) {
-				const element = match[1];
-				const count = match[2] ? parseInt(match[2]) : 1;
-				const openParenthesis = match[3];
-				const closeParenthesis = match[4];
-				const parenthesisMultiplier = match[5] ? parseInt(match[5]) : 1;
-
-				if (element) {
-					const atomicWeight = getAtomicWeight(element);
-					totalWeight += atomicWeight * count * currentMultiplier;
-				} else if (openParenthesis) {
-					stack.push(currentMultiplier);
-					currentMultiplier *= parenthesisMultiplier;
-				} else if (closeParenthesis) {
-					currentMultiplier = stack.pop();
-				}
-			}
-
-			document.getElementById("result").textContent = `The molecular weight of ${formula} is ${totalWeight.toFixed(2)} g/mol.`;
-		}
-
-		function getAtomicWeight(element) {
-			const atomicWeights = {
-				"H": 1.008,
-				"He": 4.003,
-				"Li": 6.941,
-				"Be": 9.012,
-				"B": 10.81,
-				"C": 12.01,
-				"N": 14.01,
-				"O": 16.00,
-				"F": 19.00,
-				"Ne": 20.18,
-				"Na": 22.99,
-				"Mg": 24.31,
-				"Al": 26.98,
-				"Si": 28.09,
-				"P": 30.97,
-				"S": 32.07,
-				"Cl": 35.45,
-				"K": 39.10,
-				"Ca": 40.08,
-				"Sc": 44.96,
-				"Ti": 47.87,
-				"V": 50.94,
-				"Cr": 52.00,
-				"Mn": 54.94,
-				"Fe": 55.85,
-				"Ni": 58.69,
-				"Cu": 63.55,
-				"Zn": 65.38,
-				"Ga": 69.72,
-				"Ge": 72.63,
-				"As": 74.92,
-				"Se": 78.96,
-				"Br": 79.90,
-				"Kr": 83.80,
-				"Rb": 85.47,
-				"Sr": 87.62,
-				"Y": 88.91,
-				"Zr": 91.22,
-				"Nb": 92.91,
-				"Mo": 95.94,
-				"Tc": 98.00,
-				"Ru": 101.1,
-				"Rh": 102.9,
-				"Pd": 106.4,
-				"Ag": 107.9,
-				"Cd": 112.4,
-				"In": 114.8,
-				"Sn": 118.7,
-			};
-			return atomicWeights[element];
-		}
-	</script>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>モル質量計算機</h1>
+            <p class="minmin">分子式を入力してください(カッコは展開してすべての原子に対して係数を明示してください):</p>
+            <input type="text" id="formulaInput" placeholder="例)H2O,NaCl">
+            <button onclick="calculateMolecularWeight()">計算</button>
+            <p id="result"></p>
+        
+            <script>
+                function calculateMolecularWeight() {
+                    const formula = document.getElementById("formulaInput").value;
+                    const elementRegex = /([A-Z][a-z]*)(\d*)|(\()|(\))(\d*)/g;
+                    let totalWeight = 0;
+                    let match;
+                    let currentMultiplier = 1;
+                    const stack = [];
+        
+                    while (match = elementRegex.exec(formula)) {
+                        const element = match[1];
+                        const count = match[2] ? parseInt(match[2]) : 1;
+                        const openParenthesis = match[3];
+                        const closeParenthesis = match[4];
+                        const parenthesisMultiplier = match[5] ? parseInt(match[5]) : 1;
+        
+                        if (element) {
+                            const atomicWeight = getAtomicWeight(element);
+                            totalWeight += atomicWeight * count * currentMultiplier;
+                        } else if (openParenthesis) {
+                            stack.push(currentMultiplier);
+                            currentMultiplier *= parenthesisMultiplier;
+                        } else if (closeParenthesis) {
+                            currentMultiplier = stack.pop();
+                        }
+                    }
+        
+                    document.getElementById("result").textContent = `${formula} のモル質量は ${totalWeight.toFixed(2)} g/molです.`;
+                }
+        
+                function getAtomicWeight(element) {
+                    const atomicWeights = {
+                        "H": 1.008,
+                        "He": 4.003,
+                        "Li": 6.941,
+                        "Be": 9.012,
+                        "B": 10.81,
+                        "C": 12.01,
+                        "N": 14.01,
+                        "O": 16.00,
+                        "F": 19.00,
+                        "Ne": 20.18,
+                        "Na": 22.99,
+                        "Mg": 24.31,
+                        "Al": 26.98,
+                        "Si": 28.09,
+                        "P": 30.97,
+                        "S": 32.07,
+                        "Cl": 35.45,
+                        "K": 39.10,
+                        "Ca": 40.08,
+                        "Sc": 44.96,
+                        "Ti": 47.87,
+                        "V": 50.94,
+                        "Cr": 52.00,
+                        "Mn": 54.94,
+                        "Fe": 55.85,
+                        "Ni": 58.69,
+                        "Cu": 63.55,
+                        "Zn": 65.38,
+                        "Ga": 69.72,
+                        "Ge": 72.63,
+                        "As": 74.92,
+                        "Se": 78.96,
+                        "Br": 79.90,
+                        "Kr": 83.80,
+                        "Rb": 85.47,
+                        "Sr": 87.62,
+                        "Y": 88.91,
+                        "Zr": 91.22,
+                        "Nb": 92.91,
+                        "Mo": 95.94,
+                        "Tc": 98.00,
+                        "Ru": 101.1,
+                        "Rh": 102.9,
+                        "Pd": 106.4,
+                        "Ag": 107.9,
+                        "Cd": 112.4,
+                        "In": 114.8,
+                        "Sn": 118.7,
+                    };
+                    return atomicWeights[element];
+                }
+            </script>
+            <p class="minmin">現在スズまでの原子を含む分子に対応しています.なるべく早く全元素と主要な同位体に対応させる予定です.</p>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
