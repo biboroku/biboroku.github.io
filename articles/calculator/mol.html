@@ -13,15 +13,28 @@
 	<script>
 		function calculateMolecularWeight() {
 			const formula = document.getElementById("formulaInput").value;
-			const elementRegex = /([A-Z][a-z]*)(\d*)/g;
+			const elementRegex = /([A-Z][a-z]*)(\d*)|(\()|(\))(\d*)/g;
 			let totalWeight = 0;
 			let match;
+			let currentMultiplier = 1;
+			const stack = [];
 
 			while (match = elementRegex.exec(formula)) {
 				const element = match[1];
 				const count = match[2] ? parseInt(match[2]) : 1;
-				const atomicWeight = getAtomicWeight(element);
-				totalWeight += atomicWeight * count;
+				const openParenthesis = match[3];
+				const closeParenthesis = match[4];
+				const parenthesisMultiplier = match[5] ? parseInt(match[5]) : 1;
+
+				if (element) {
+					const atomicWeight = getAtomicWeight(element);
+					totalWeight += atomicWeight * count * currentMultiplier;
+				} else if (openParenthesis) {
+					stack.push(currentMultiplier);
+					currentMultiplier *= parenthesisMultiplier;
+				} else if (closeParenthesis) {
+					currentMultiplier = stack.pop();
+				}
 			}
 
 			document.getElementById("result").textContent = `The molecular weight of ${formula} is ${totalWeight.toFixed(2)} g/mol.`;
