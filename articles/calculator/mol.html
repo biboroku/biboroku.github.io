@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>物質量計算機</title>
+</head>
+<body>
+	<h1>物質量計算機</h1>
+	<p>Enter the chemical formula:</p>
+	<input type="text" id="formulaInput" placeholder="e.g. H2O or NaCl">
+	<button onclick="calculateMolecularWeight()">Calculate</button>
+	<p id="result"></p>
+
+	<script>
+		function calculateMolecularWeight() {
+			const formula = document.getElementById("formulaInput").value;
+			const elementRegex = /([A-Z][a-z]*)(\d*)/g;
+			let totalWeight = 0;
+			let match;
+
+			while (match = elementRegex.exec(formula)) {
+				const element = match[1];
+				const count = match[2] ? parseInt(match[2]) : 1;
+				const atomicWeight = getAtomicWeight(element);
+				totalWeight += atomicWeight * count;
+			}
+
+			document.getElementById("result").textContent = `The molecular weight of ${formula} is ${totalWeight.toFixed(2)} g/mol.`;
+		}
+
+		function getAtomicWeight(element) {
+			const atomicWeights = {
+				"H": 1.008,
+				"He": 4.003,
+				"Li": 6.941,
+				"Be": 9.012,
+				"B": 10.81,
+				"C": 12.01,
+				"N": 14.01,
+				"O": 16.00,
+				"F": 19.00,
+				"Ne": 20.18,
+			};
+			return atomicWeights[element];
+		}
+	</script>
+</body>
+</html>
