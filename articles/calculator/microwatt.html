@@ -1,31 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
 <head>
-	<title>電子レンジ加熱時間計算アプリ</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>電子レンジ加熱時間計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
 </head>
+
 <body>
-	<h1>電子レンジ加熱時間計算アプリ</h1>
-	<form onsubmit="calculatePower(); return false;">
-		<label for="watts">記載されている仕事率(W)：</label>
-		<input type="number" id="watts" name="watts" required><br>
-		<label for="time">記載されている加熱時間(秒)：</label>
-		<input type="number" id="time" name="time" required><br>
-		<label for="watts">お使いの電子レンジが対応している仕事率(W)：</label>
-		<input type="number" id="iwatts" name="iwatts" required>
-		<input type="submit" value="計算">
-	</form>
-	<p id="result3"></p>
-	<script>
-		function calculatePower() {
-			const watts = document.getElementById('watts').value;
-			const time = document.getElementById('time').value;
-            const iwatts = document.getElementById('iwatts').value;
-			const result1 = watts * time;
-            const result2 = result1 / iwatts;
-			document.getElementById('result3').innerHTML = `${watts} ワットで ${time} 秒間加熱すると ${result1} Jです.<br>必要な熱量から逆算するとお使いの電子レンジでの加熱時間は ${result2} 秒です.`;
-		}
-	</script>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>電子レンジ加熱時間計算機</h1>
+            <div class="minmin">
+                <form onsubmit="calculatePower(); return false;">
+                    <label for="watts">記載されている仕事率(W)：</label>
+                    <input type="number" id="watts" name="watts" required><br>
+                    <label for="time">記載されている加熱時間(秒)：</label>
+                    <input type="number" id="time" name="time" required><br>
+                    <label for="watts">お使いの電子レンジが対応している仕事率(W)：</label>
+                    <input type="number" id="iwatts" name="iwatts" required>
+                    <input type="submit" value="計算">
+                </form>
+                <p id="result3"></p>
+                <script>
+                    function calculatePower() {
+                        const watts = document.getElementById('watts').value;
+                        const time = document.getElementById('time').value;
+                        const iwatts = document.getElementById('iwatts').value;
+                        const result1 = watts * time;
+                        const result2 = result1 / iwatts;
+                        document.getElementById('result3').innerHTML = `${watts} ワットで ${time} 秒間加熱すると ${result1} Jです.<br>必要な熱量から逆算するとお使いの電子レンジでの加熱時間は ${result2} 秒です.`;
+                    }
+                </script>
+            </div>
+        </div>
 </body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
