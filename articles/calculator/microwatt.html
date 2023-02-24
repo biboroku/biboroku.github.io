@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>電子レンジ加熱時間計算アプリ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1>電子レンジ加熱時間計算アプリ</h1>
+	<form onsubmit="calculatePower(); return false;">
+		<label for="watts">記載されている仕事率(W)：</label>
+		<input type="number" id="watts" name="watts" required><br>
+		<label for="time">記載されている加熱時間(秒)：</label>
+		<input type="number" id="time" name="time" required><br>
+		<label for="watts">お使いの電子レンジが対応している仕事率(W)：</label>
+		<input type="number" id="iwatts" name="iwatts" required>
+		<input type="submit" value="計算">
+	</form>
+	<p id="result3"></p>
+	<script>
+		function calculatePower() {
+			const watts = document.getElementById('watts').value;
+			const time = document.getElementById('time').value;
+            const iwatts = document.getElementById('iwatts').value;
+			const result1 = watts * time;
+            const result2 = result1 / iwatts;
+			document.getElementById('result3').innerHTML = `${watts} ワットで ${time} 秒間加熱すると ${result1} ジュールです.必要な熱量から逆算するとお使いの電子レンジでの加熱時間は ${result2} 秒です.`;
+		}
+	</script>
+</body>
+</html>
