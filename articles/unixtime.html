@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-Time Unix Time</title>
+  </head>
+  <body>
+    <h1>Real-Time Unix Time</h1>
+    <p class="minmin" id="unix-time"></p>
+    <script>
+        function displayUnixTime() {
+        // 現在のUNIX時間を取得
+        const unixTime = Math.floor(Date.now() / 1000);
+
+        // HTMLのp要素にUNIX時間を表示
+        const unixTimeElement = document.getElementById("unix-time");
+        unixTimeElement.textContent = `Current Unix Time: ${unixTime}`;
+        }
+
+        // 1秒ごとにdisplayUnixTime関数を呼び出し、UNIX時間を更新
+        setInterval(displayUnixTime, 1000);
+    </script>
+  </body>
+</html>
