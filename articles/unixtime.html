@@ -1,23 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Real-Time Unix Time</title>
-  </head>
-  <body>
-    <h1>Real-Time Unix Time</h1>
-    <p class="minmin" id="unix-time"></p>
-    <script>
-        function displayUnixTime() {
-        // 現在のUNIX時間を取得
-        const unixTime = Math.floor(Date.now() / 1000);
+<html lang="ja">
 
-        // HTMLのp要素にUNIX時間を表示
-        const unixTimeElement = document.getElementById("unix-time");
-        unixTimeElement.textContent = `Current Unix Time: ${unixTime}`;
-        }
+<head>
+    <meta charset="UTF-8">
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href="../style.css">
+    <title>titles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../main.js"></script>
+</head>
 
-        // 1秒ごとにdisplayUnixTime関数を呼び出し、UNIX時間を更新
-        setInterval(displayUnixTime, 1000);
-    </script>
-  </body>
+<body>
+        <div class="gradientheader">
+            <header><a href="../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>UnixTimeをリアルタイムで眺める</h1>
+            <p class="minmin" id="unix-time"></p>
+            <script>
+                function displayUnixTime() {
+                // 現在のUNIX時間を取得
+                const unixTime = Math.floor(Date.now() / 1000);
+        
+                // HTMLのp要素にUNIX時間を表示
+                const unixTimeElement = document.getElementById("unix-time");
+                unixTimeElement.textContent = `Current Unix Time: ${unixTime}`;
+                }
+        
+                // 1秒ごとにdisplayUnixTime関数を呼び出し、UNIX時間を更新
+                setInterval(displayUnixTime, 1000);
+            </script>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
