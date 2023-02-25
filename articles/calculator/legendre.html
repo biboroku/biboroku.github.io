@@ -1,49 +1,73 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="ja">
+
+<head>
     <meta charset="UTF-8">
-    <title>Factorial Divisibility Calculator</title>
-  </head>
-  <body>
-    <h1>Factorial Divisibility Calculator</h1>
-    <p>Enter two natural numbers below:</p>
-    <form>
-      <label for="n">n:</label>
-      <input type="number" id="n" name="n"><br>
-      <label for="m">m:</label>
-      <input type="number" id="m" name="m"><br><br>
-      <button type="button" onclick="calculate()">Calculate</button>
-    </form>
-    <p id="result"></p>
-    <script>
-      function calculate() {
-        const n = parseInt(document.getElementById("n").value);
-        let m = parseInt(document.getElementById("m").value);
+    <meta name=”robots” content=”noindex,nofollow”>
+    <meta name=”description” content=”こんにちはー、僕の備忘録へようこそ”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover”>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link rel="stylesheet" href=".././../style.css">
+    <title>階乗数整除可能回数計算機</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Stick&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Stick&display=swap" rel="stylesheet">
+    <script src="../../../main.js"></script>
+</head>
 
-        let num = n;
-        let count = 0;
-        let p = 2;
-
-        while (p <= m) {
-          let exp = 0;
-          while (m % p === 0) {
-            m /= p;
-            exp++;
-          }
-          if (exp > 0) {
-            let factorCount = 0;
-            let factor = p;
-            while (factor <= num) {
-              factorCount += Math.floor(num / factor);
-              factor *= p;
-            }
-            count = count === 0 ? Math.floor(factorCount / exp) : Math.min(count, Math.floor(factorCount / exp));
-          }
-          p++;
-        }
-
-        document.getElementById("result").innerHTML = `n! is divisible by ${parseInt(document.getElementById("m").value)} ${count} times.`;
-      }
-    </script>
-  </body>
+<body>
+        <div class="gradientheader">
+            <header><a href="../../../index.html" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+        </div>
+        <div class="siro">
+            <h1>階乗数整除可能回数計算機</h1>
+            <p class="minmin">n!をmで割り切れる回数を計算します.みんな大好き、Legendreの定理を使って計算しています.数オリでよく使う計算テクです.</p>
+            <form>
+                <label for="n">n:</label>
+                <input type="number" id="n" name="n"><br>
+                <label for="m">m:</label>
+                <input type="number" id="m" name="m"><br><br>
+                <button type="button" onclick="calculate()">計算</button>
+              </form>
+              <p id="result"></p>
+              <script>
+                function calculate() {
+                  const n = parseInt(document.getElementById("n").value);
+                  let m = parseInt(document.getElementById("m").value);
+          
+                  let num = n;
+                  let count = 0;
+                  let p = 2;
+          
+                  while (p <= m) {
+                    let exp = 0;
+                    while (m % p === 0) {
+                      m /= p;
+                      exp++;
+                    }
+                    if (exp > 0) {
+                      let factorCount = 0;
+                      let factor = p;
+                      while (factor <= num) {
+                        factorCount += Math.floor(num / factor);
+                        factor *= p;
+                      }
+                      count = count === 0 ? Math.floor(factorCount / exp) : Math.min(count, Math.floor(factorCount / exp));
+                    }
+                    p++;
+                  }
+          
+                  document.getElementById("result").innerHTML = `n! is divisible by ${parseInt(document.getElementById("m").value)} ${count} times.`;
+                }
+              </script>
+        </div>
+</body>
+<div class="gradientfooter">
+    <header>©僕の備忘録!!!-2023</header>
+</div>
 </html>
