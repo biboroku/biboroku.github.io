@@ -22,13 +22,27 @@
 
         let num = n;
         let count = 0;
+        let p = 2;
 
-        while (num > 0) {
-          count += Math.floor(num / m);
-          num = Math.floor(num / m);
+        while (p <= m) {
+          let exp = 0;
+          while (m % p === 0) {
+            m /= p;
+            exp++;
+          }
+          if (exp > 0) {
+            let factorCount = 0;
+            let factor = p;
+            while (factor <= num) {
+              factorCount += Math.floor(num / factor);
+              factor *= p;
+            }
+            count = count === 0 ? Math.floor(factorCount / exp) : Math.min(count, Math.floor(factorCount / exp));
+          }
+          p++;
         }
 
-        document.getElementById("result").innerHTML = `n! is divisible by ${m} ${count} times.`;
+        document.getElementById("result").innerHTML = `n! is divisible by ${parseInt(document.getElementById("m").value)} ${count} times.`;
       }
     </script>
   </body>
