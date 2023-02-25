@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Factorial Divisibility Calculator</title>
+  </head>
+  <body>
+    <h1>Factorial Divisibility Calculator</h1>
+    <p>Enter two natural numbers below:</p>
+    <form>
+      <label for="n">n:</label>
+      <input type="number" id="n" name="n"><br>
+      <label for="m">m:</label>
+      <input type="number" id="m" name="m"><br><br>
+      <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+    <p id="result"></p>
+    <script>
+      function calculate() {
+        const n = parseInt(document.getElementById("n").value);
+        const m = parseInt(document.getElementById("m").value);
+
+        let num = n;
+        let count = 0;
+
+        while (num > 0) {
+          count += Math.floor(num / m);
+          num = Math.floor(num / m);
+        }
+
+        document.getElementById("result").innerHTML = `n! is divisible by ${m} ${count} times.`;
+      }
+    </script>
+  </body>
+</html>
