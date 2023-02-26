@@ -16,11 +16,19 @@
     border-radius: 10pt;
     vertical-align: middle;
   }
-.com { font-family: 'Noto Sans JP', sans-serif; 
-    font-size: 140%;
-    text-indent: 0%;
+.of { font-family: 'Noto Sans JP', sans-serif
+    text-decoration: none;
+    margin: 10px;
+    padding: 0;
 }
+.com{
+    background: #DDD;
+  }
+  .mycom{
+    background: #EEE;
+  }gradient(to left, #30cfd0 0%, #330867 100%);
+  }
 </style>
 <div class="gradientheader">
-<header><a href="#" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
+<header><a href="https://biboroku.github.io" title="クリックするとトップページに戻ります"><font color="black">僕の備忘録!!!</font></a></header>
 </div>
