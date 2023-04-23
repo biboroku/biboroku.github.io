@@ -157,7 +157,9 @@ function stopTimer() {
 }
 
 function resetTimer() {
-  stopTimer();
-  document.querySelector("#timer").textContent = "00:00.00";
-}
+    stopTimer();
+    startTime = null;
+    document.querySelector("#timer").textContent = "00:00.00";
+  }
+  
       
