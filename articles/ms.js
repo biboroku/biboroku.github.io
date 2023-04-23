@@ -151,12 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
             messageElement.textContent = 'GAME CLEAR';
             startGame(difficulty);
+            startGame(difficulty);
         }
-        if (win) {
-            clearInterval(timerInterval);
-            message.textContent = 'おめでとうございます！勝利です！';
-            setTimeout(startGame, 2000); // 2秒後にstartGame()を呼び出します
-          }
     }
 
     function getAdjacentIndexes(index, difficulty) {
