@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     startButton.addEventListener('click', () => {
+        messageElement.textContent = '';
         const difficulty = difficulties[difficultySelect.value];
         startGame(difficulty);
     });
@@ -28,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         firstClick = true;
         revealedCells = 0;
         mines = new Set();
-        messageElement.textContent = '';
 
         for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
             const cell = document.createElement('div');
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
                 if (mines.has(index)) {
                     cell.style.backgroundColor = 'red';
+                    revealMines(difficulty);
                     messageElement.textContent = 'ゲームオーバー！';
                     startGame(difficulty);
                 } else {
@@ -78,6 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             cell.classList.add('flagged');
             cell.textContent = 'F';
+        }
+    }
+
+    function revealMines(difficulty) {
+        for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
+            const cell = grid.children[i];
+            if (mines.has(i)) {
+                cell.textContent = '●';
+                cell.style.color = 'red';
+            } else if (cell.classList.contains('flagged')) {
+                cell.style.textDecoration = 'line-through';
+            }
         }
     }
 
