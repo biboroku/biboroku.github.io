@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (mines.has(index)) {
                     cell.style.backgroundColor = 'red';
                     revealMines(difficulty);
-                    messageElement.textContent = 'GAME OVER!!!';
+                    messageElement.innerHTML = '<font color="red">GAME OVER!!!<font>';
                     clearInterval(timerInterval);
                     startGame(difficulty);
                 } else {
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkWin(difficulty) {
         if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
-            messageElement.innerHTML = 'GAME CLEAR!!!<br>STARTボタンで再プレイ';
+            messageElement.innerHTML = '<font color="blue">GAME CLEAR!!!<font><br>STARTボタンで再プレイ';
             startGame(difficulty);
         }
     }
