@@ -66,10 +66,26 @@ const levels = [
       function countMinesAround(index) {
         return getNeighbors(index).reduce((count, neighbor) => count + (cells[neighbor].isMine ? 1 : 0), 0);
       }
+
+      let minesPlaced = false;
+
+      function placeMines(excludeIndex) {
+        for (let i = 0; i < mines; i++) {
+          let index;
+          do {
+            index = Math.floor(Math.random() * cells.length);
+          } while (cells[index].isMine || index === excludeIndex || getNeighbors(excludeIndex).includes(index));
+          cells[index].isMine = true;
+        }
+        minesPlaced = true;
+      }
     
       function revealCell(index) {
         if (startTime === null) startTimer();
         if (cells[index].isRevealed || cells[index].isFlagged) return;
+        if (!minesPlaced) {
+          placeMines(index);
+        }
         cells[index].isRevealed = true;
         const cell = board.children[index];
         cell.classList.add("uncovered");
@@ -78,18 +94,6 @@ const levels = [
           cell.classList.add("mine");
           gameOver();
           return;
-        }
-    
-        const minesAround = countMinesAround(index);
-        if (minesAround > 0) {
-          cell.classList.add(`cell-${minesAround}`);
-          cell.textContent = minesAround;
-        } else {
-          getNeighbors(index).forEach(revealCell);
-        }
-    
-        if (checkVictory()) {
-          showMessage("勝利！おめでとうございます！");
         }
       }
     
