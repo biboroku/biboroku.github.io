@@ -1,164 +1,177 @@
-const levels = [
-    { rows: 9, cols: 9, mines: 10 },
-    { rows: 16, cols: 16, mines: 40 },
-    { rows: 30, cols: 16, mines: 99 },
-    { rows: 50, cols: 50, mines: 500 }
-  ];
-  
-  document.querySelector("#start").addEventListener("click", () => {
-    const level = levels[document.querySelector("#difficulty").value];
-    startGame(level.rows, level.cols, level.mines);
-  });
-  
-  function startGame(rows, cols, mines) {
-    const board = document.querySelector("#board");
-    const message = document.querySelector("h2");
-    message.textContent = "";
-  
-    board.innerHTML = "";
-    board.style.gridTemplateRows = `repeat(${rows}, 30px)`;
-    board.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+document.addEventListener('DOMContentLoaded', () => {
+    const difficultySelect = document.getElementById('difficulty');
+    const startButton = document.getElementById('start');
+    const grid = document.querySelector('.grid');
+    const messageElement = document.getElementById('message');
+    const timerElement = document.getElementById('timer');
 
-    resetTimer();
-  
-    const cells = [];
-    for (let i = 0; i < rows * cols; i++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.addEventListener("click", () => revealCell(i));
-      cell.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        toggleFlag(i);
-      });
-      board.appendChild(cell);
-      cells.push({ isMine: false, isRevealed: false, isFlagged: false });
-    }
-  
-    for (let i = 0; i < mines; i++) {
-      let index;
-      do {
-        index = Math.floor(Math.random() * cells.length);
-      } while (cells[index].isMine);
-      cells[index].isMine = true;
-    }
-  
-    function getCellIndex(row, col) {
-      return row * cols + col;
-    }
-  
-    function getCellRowCol(index) {
-      return { row: Math.floor(index / cols), col: index % cols };
-    }
-  
-    function getNeighbors(index) {
-        const { row, col } = getCellRowCol(index);
-        const neighbors = [];
-        for (let r = row - 1; r <= row + 1; r++) {
-          for (let c = col - 1; c <= col + 1; c++) {
-            if (r === row && c === col) continue;
-            if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
-            neighbors.push(getCellIndex(r, c));
-          }
+    let firstClick = true;
+    let revealedCells = 0;
+    let mines;
+    let timerInterval;
+    let startTime;
+
+    const difficulties = {
+        beginner: {rows: 9, cols: 9, mines: 10},
+        intermediate: {rows: 16, cols: 16, mines: 40},
+        advanced: {rows: 30, cols: 16, mines: 99},
+        superhuman: {rows: 50, cols: 50, mines: 500},
+    };
+
+    startButton.addEventListener('click', () => {
+        const difficulty = difficulties[difficultySelect.value];
+        startGame(difficulty);
+    });
+
+    function startGame(difficulty) {
+        clearInterval(timerInterval);
+
+        grid.innerHTML = '';
+        grid.style.gridTemplateColumns = `repeat(${difficulty.cols}, 30px)`;
+        grid.style.gridTemplateRows = `repeat(${difficulty.rows}, 30px)`;
+
+        firstClick = true;
+        revealedCells = 0;
+        mines = new Set();
+
+        for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.addEventListener('mousedown', (event) => handleClick(event, i, difficulty));
+            grid.appendChild(cell);
         }
-        return neighbors;
-      }
-    
-      function countMinesAround(index) {
-        return getNeighbors(index).reduce((count, neighbor) => count + (cells[neighbor].isMine ? 1 : 0), 0);
-      }
-    
-      function revealCell(index) {
-        if (startTime === null) startTimer();
-        if (cells[index].isRevealed || cells[index].isFlagged) return;
-        cells[index].isRevealed = true;
-        const cell = board.children[index];
-        cell.classList.add("uncovered");
-    
-        if (cells[index].isMine) {
-          cell.classList.add("mine");
-          gameOver();
-          return;
-        }
-    
-        const minesAround = countMinesAround(index);
-        if (minesAround > 0) {
-          cell.classList.add(`cell-${minesAround}`);
-          cell.textContent = minesAround;
+    }
+
+    function handleClick(event, index, difficulty) {
+        if (firstClick) {
+            messageElement.textContent = '';
+            placeMines(index, difficulty);
+            revealAdjacent(index, difficulty);
+            firstClick = false;
+
+            startTime = performance.now();
+            timerInterval = setInterval(updateTimer, 10);
+            timerElement.textContent = '00:00.00';
         } else {
-          getNeighbors(index).forEach(revealCell);
+            const cell = grid.children[index];
+            if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
+                if (mines.has(index)) {
+                    cell.style.backgroundColor = 'red';
+                    revealMines(difficulty);
+                    messageElement.textContent = 'ゲームオーバー！';
+                    clearInterval(timerInterval);
+                    startGame(difficulty);
+                } else {
+                    revealAdjacent(index, difficulty);
+                }
+            } else if (event.button === 2 && !cell.classList.contains('revealed')) {
+                toggleFlag(cell);
+            }
         }
-    
-        if (checkVictory()) {
-          showMessage("勝利！おめでとうございます！");
-        }
-      }
-    
-      function toggleFlag(index) {
-        if (cells[index].isRevealed) return;
-        cells[index].isFlagged = !cells[index].isFlagged;
-        const cell = board.children[index];
-        cell.classList.toggle("flagged");
-        cell.textContent = cells[index].isFlagged ? "F" : "";
-      }
-    
-      function checkVictory() {
-        return cells.every(
-          (cell, index) =>
-            (cell.isFlagged && cell.isMine) || (!cell.isMine && cell.isRevealed)
-        );
-      }
-    
-      function gameOver() {
-        stopTimer();
-        cells.forEach((cell, index) => {
-          if (cell.isMine) {
-            const el = board.children[index];
-            el.textContent = "●";
-          } else if (cell.isFlagged) {
-            const el = board.children[index];
-            el.classList.remove("flagged");
-            el.classList.add("false-flag");
-            el.textContent = "F";
-          }
-        });
-        showMessage("ゲームオーバー");
-      }
-    
-      function showMessage(msg) {
-        stopTimer();
-        const message = document.querySelector("h2");
-        message.textContent = msg + (msg === "勝利！おめでとうございます！" ? ` 経過時間: ${document.querySelector("#timer").textContent}` : "");
-      }      
+
+        checkWin(difficulty);
     }
 
-let timerId = null;
-let startTime = null;
+    function updateTimer() {
+        const elapsed = performance.now() - startTime;
+        const minutes = Math.floor(elapsed / 60000);
+        const seconds = Math.floor((elapsed % 60000) / 1000);
+        const centiseconds = Math.floor((elapsed % 1000) / 10);
 
-function startTimer() {
-  if (timerId !== null) clearInterval(timerId);
-  startTime = Date.now();
-  timerId = setInterval(updateTimer, 10);
-}
+        timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(centiseconds).padStart(2, '0')}`;
+    }
 
-function formatTime(elapsedTime) {
-  const minutes = Math.floor(elapsedTime / 6000);
-  const seconds = Math.floor((elapsedTime % 6000) / 100);
-  const centiseconds = elapsedTime % 100;
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
-}
+    function placeMines(clickedIndex, difficulty) {
+        while (mines.size < difficulty.mines) {
+            const index = Math.floor(Math.random() * difficulty.rows * difficulty.cols);
+            const isAdjacent = getAdjacentIndexes(clickedIndex, difficulty).some((adjacentIndex) => adjacentIndex === index);
+            if (index !== clickedIndex && !isAdjacent) {
+                mines.add(index);
+            }
+        }
+    }
 
-function updateTimer() {
-  const elapsedTime = Math.floor((Date.now() - startTime) / 10);
-  document.querySelector("#timer").textContent = formatTime(elapsedTime);
-}
+    function toggleFlag(cell) {
+        if (cell.classList.contains('flagged')) {
+            cell.classList.remove('flagged');
+            cell.textContent = '';
+        } else {
+            cell.classList.add('flagged');
+            cell.textContent = 'F';
+        }
+    }
 
-function stopTimer() {
-  if (timerId !== null) clearInterval(timerId);
-}
+    function revealMines(difficulty) {
+        for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
+            const cell = grid.children[i];
+            if (mines.has(i)) {
+                cell.textContent = '●';
+                cell.style.color = 'red';
+            } else if (cell.classList.contains('flagged')) {
+                cell.style.textDecoration = 'line-through';
+            }
+        }
+    }
 
-function resetTimer() {
-    stopTimer();
-    startTime = null;
-    document.querySelector("#timer").textContent = "00:00.00";
-  }
-  
+    function revealAdjacent(index, difficulty) {
+        const cell = grid.children[index];
+        if (cell.classList.contains('revealed') || cell.classList.contains('flagged')) return;
+
+        const adjacentMineCount = getAdjacentIndexes(index, difficulty).filter((adjacentIndex) => mines.has(adjacentIndex)).length;
+
+        cell.classList.add('revealed');
+        revealedCells++;
+
+        if (adjacentMineCount > 0) {
+            cell.textContent = adjacentMineCount;
+            cell.dataset.number = adjacentMineCount;
+            cell.addEventListener('mousedown', (event) => {
+                if (event.button === 0) {
+                    checkAutoReveal(index, difficulty);
+                }
+            });
+        } else {
+            getAdjacentIndexes(index, difficulty).forEach((adjacentIndex) => revealAdjacent(adjacentIndex, difficulty));
+        }
+
+        checkWin(difficulty);
+    }
+
+    function checkAutoReveal(index, difficulty) {
+        const adjacentIndexes = getAdjacentIndexes(index, difficulty);
+        const flaggedCount = adjacentIndexes.filter((adjacentIndex) => grid.children[adjacentIndex].classList.contains('flagged')).length;
+        const mineCount = adjacentIndexes.filter((adjacentIndex) => mines.has(adjacentIndex)).length;
+
+        if (flaggedCount === mineCount) {
+            adjacentIndexes.forEach((adjacentIndex) => revealAdjacent(adjacentIndex, difficulty));
+        }
+    }
+
+    function checkWin(difficulty) {
+        if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
+            messageElement.textContent = 'おめでとうございます！勝利です！';
+            startGame(difficulty);
+        }
+    }
+
+    function getAdjacentIndexes(index, difficulty) {
+        const row = Math.floor(index / difficulty.cols);
+        const col = index % difficulty.cols;
+        const adjacentIndexes = [];
+
+        for (let r = row - 1; r <= row + 1; r++) {
+            for (let c = col - 1; c <= col + 1; c++) {
+                if (r >= 0 && r < difficulty.rows && c >= 0 && c < difficulty.cols && !(r === row && c === col)) {
+                    adjacentIndexes.push(r * difficulty.cols + c);
+                }
+            }
+        }
+
+        return adjacentIndexes;
+    }
+
+    // Prevent the context menu from appearing on right-click
+    grid.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+});

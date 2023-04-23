@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マインスイーパー</title>
-  <link rel="stylesheet" href="ms.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マインスイーパー</title>
+    <link rel="stylesheet" href="ms.css">
 </head>
 <body>
-  <h1>マインスイーパー</h1>
-  <div id="settings">
-    <select id="difficulty">
-      <option value="0">初級</option>
-      <option value="1">中級</option>
-      <option value="2">上級</option>
-      <option value="3">超人</option>
-    </select>
-    <button id="start">ゲーム開始</button>
-  </div>
-  <div id="board"></div>
-  <h2></h2>
-  <div>経過時間: <span id="timer">0</span> 秒</div>
-  <script src="ms.js"></script>
+    <header>
+        <h1>マインスイーパー</h1>
+    </header>
+    <main>
+        <div class="settings">
+            <select id="difficulty">
+                <option value="beginner">初級</option>
+                <option value="intermediate">中級</option>
+                <option value="advanced">上級</option>
+                <option value="superhuman">超人</option>
+            </select>
+            <button id="start">ゲーム開始</button>
+        </div>
+        <div class="grid"></div>
+        <h2 id="message"></h2>
+        <h2 id="timer">00:00.00</h2>
+    </main>
+    <script src="ms.js"></script>
+    <p><a href="../index.html">ホーム</a></p>
 </body>
 </html>
