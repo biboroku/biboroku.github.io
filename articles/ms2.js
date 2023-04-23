@@ -3,10 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start');
     const grid = document.querySelector('.grid');
     const messageElement = document.getElementById('message');
+    const timerElement = document.getElementById('timer');
 
     let firstClick = true;
     let revealedCells = 0;
     let mines;
+    let timerInterval;
+    let startTime;
 
     const difficulties = {
         beginner: {rows: 9, cols: 9, mines: 10},
@@ -21,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function startGame(difficulty) {
+        clearInterval(timerInterval);
+        timerElement.textContent = '00:00.00';
+
         grid.innerHTML = '';
         grid.style.gridTemplateColumns = `repeat(${difficulty.cols}, 30px)`;
         grid.style.gridTemplateRows = `repeat(${difficulty.rows}, 30px)`;
@@ -43,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
             placeMines(index, difficulty);
             revealAdjacent(index, difficulty);
             firstClick = false;
+
+            startTime = performance.now();
+            timerInterval = setInterval(updateTimer, 10);
         } else {
             const cell = grid.children[index];
             if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
@@ -50,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cell.style.backgroundColor = 'red';
                     revealMines(difficulty);
                     messageElement.textContent = 'ゲームオーバー！';
+                    clearInterval(timerInterval);
                     startGame(difficulty);
                 } else {
                     revealAdjacent(index, difficulty);
@@ -60,6 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         checkWin(difficulty);
+    }
+
+    function updateTimer() {
+        const elapsed = performance.now() - startTime;
+        const minutes = Math.floor(elapsed / 60000);
+        const seconds = Math.floor((elapsed % 60000) / 1000);
+        const centiseconds = Math.floor((elapsed % 1000) / 10);
+
+        timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(centiseconds).padStart(2, '0')}`;
     }
 
     function placeMines(clickedIndex, difficulty) {
