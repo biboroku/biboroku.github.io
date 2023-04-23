@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageElement = document.getElementById('message');
 
     let firstClick = true;
-    let flaggedMines = 0;
     let revealedCells = 0;
     let mines;
 
@@ -27,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.style.gridTemplateRows = `repeat(${difficulty.rows}, 30px)`;
 
         firstClick = true;
-        flaggedMines = 0;
         revealedCells = 0;
         mines = new Set();
+        messageElement.textContent = '';
 
         for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
             const cell = document.createElement('div');
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             firstClick = false;
         } else {
             const cell = grid.children[index];
-            if (event.button === 0 && !cell.classList.contains('flagged')) {
+            if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
                 if (mines.has(index)) {
                     cell.style.backgroundColor = 'red';
                     messageElement.textContent = 'ゲームオーバー！';
@@ -54,9 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     revealAdjacent(index, difficulty);
                 }
-            } else if (event.button === 2) {
-                clearTimeout(longPressTimeout);
-                toggleFlag(cell, index);
+            } else if (event.button === 2 && !cell.classList.contains('revealed')) {
+                toggleFlag(cell);
             }
         }
 
@@ -73,15 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function toggleFlag(cell, index) {
+    function toggleFlag(cell) {
         if (cell.classList.contains('flagged')) {
             cell.classList.remove('flagged');
             cell.textContent = '';
-            if (mines.has(index)) flaggedMines--;
         } else {
             cell.classList.add('flagged');
             cell.textContent = 'F';
-            if (mines.has(index)) flaggedMines++;
         }
     }
 
@@ -105,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             getAdjacentIndexes(index, difficulty).forEach((adjacentIndex) => revealAdjacent(adjacentIndex, difficulty));
         }
+
+        checkWin(difficulty);
     }
 
     function checkAutoReveal(index, difficulty) {
@@ -143,21 +141,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prevent the context menu from appearing on right-click
     grid.addEventListener('contextmenu', (event) => {
         event.preventDefault();
-    });
-
-    // Enable flagging with a long press
-    let longPressTimeout;
-    grid.addEventListener('mousedown', (event) => {
-        if (event.button === 0) {
-            longPressTimeout = setTimeout(() => {
-                const cell = event.target;
-                const index = Array.prototype.indexOf.call(grid.children, cell);
-                toggleFlag(cell, index);
-            }, 150);
-        }
-    });
-
-    grid.addEventListener('mouseup', () => {
-        clearTimeout(longPressTimeout);
     });
 });

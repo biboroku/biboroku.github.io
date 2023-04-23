@@ -8,11 +8,15 @@ header {
     text-align: center;
 }
 
+h2 {
+    text-align: center;
+}
+
 .settings {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .grid {
