@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     startButton.addEventListener('click', () => {
-        messageElement.textContent = '';
         const difficulty = difficulties[difficultySelect.value];
         startGame(difficulty);
     });
@@ -40,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleClick(event, index, difficulty) {
         if (firstClick) {
+            messageElement.textContent = '';
             placeMines(index, difficulty);
             revealAdjacent(index, difficulty);
             firstClick = false;
