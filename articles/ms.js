@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const el = document.createElement("div");
         el.classList.add("cell");
         el.addEventListener("click", () => revealCell(index));
+        el.addEventListener("dblclick", () => checkForAutoReveal(index));
         el.addEventListener("contextmenu", (e) => {
           e.preventDefault();
           toggleFlag(index);
@@ -106,12 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
           getNeighbors(index).forEach((neighbor) => revealCell(neighbor, true));
         }
       
-        checkForAutoReveal(index, minesAround);
-      
         if (checkVictory()) {
           showMessage("勝利！おめでとうございます！");
         }
-      }      
+      }               
   
     function toggleFlag(index) {
         if (cells[index].isRevealed) return;
