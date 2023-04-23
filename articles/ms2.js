@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startGame(difficulty) {
         clearInterval(timerInterval);
-        timerElement.textContent = '00:00.00';
 
         grid.innerHTML = '';
         grid.style.gridTemplateColumns = `repeat(${difficulty.cols}, 30px)`;
@@ -52,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             startTime = performance.now();
             timerInterval = setInterval(updateTimer, 10);
+            timerElement.textContent = '00:00.00';
         } else {
             const cell = grid.children[index];
             if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
