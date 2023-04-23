@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function startGame(difficulty) {
-        // ゲームのロジック
+        grid.innerHTML = ''; // グリッドをリセット
+        grid.style.gridTemplateColumns = `repeat(${difficulty.cols}, 30px)`;
+        grid.style.gridTemplateRows = `repeat(${difficulty.rows}, 30px)`;
+
+        // セルを生成してグリッドに追加
+        for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            grid.appendChild(cell);
+        }
+
+        // ここにゲームのロジックを追加（マインの配置、セルのクリック動作など）
     }
 });
