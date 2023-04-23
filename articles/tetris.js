@@ -178,3 +178,16 @@ function draw(matrix, tetrimino) {
         draw(boardMatrix, currentTetrimino);
     }, 500);
     
+    function startGame() {
+        createBoard();
+    
+        currentTetrimino = createTetrimino();
+        gameInterval = setInterval(() => {
+            moveDown();
+            draw(boardMatrix, currentTetrimino);
+        }, 500);
+    }
+    
+    const startButton = document.getElementById('start-btn');
+    startButton.addEventListener('click', startGame);
+    
