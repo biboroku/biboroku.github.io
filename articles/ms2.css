@@ -8,6 +8,10 @@ header {
     text-align: center;
 }
 
+h2 {
+    text-align: center;
+}
+
 .settings {
     display: flex;
     justify-content: center;
