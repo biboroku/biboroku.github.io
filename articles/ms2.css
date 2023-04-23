@@ -29,6 +29,7 @@ header {
     line-height: 30px;
     background-color: #ccc;
     color: #333;
+    font-weight: bold;
 }
 
 .grid .cell.revealed {
@@ -36,3 +37,39 @@ header {
 }
 
 /* その他のスタイルや色の設定 */
+
+.cell.flagged::before {
+    content: 'F';
+}
+
+.cell[data-number="1"] {
+    color: blue;
+}
+
+.cell[data-number="2"] {
+    color: green;
+}
+
+.cell[data-number="3"] {
+    color: red;
+}
+
+.cell[data-number="4"] {
+    color: purple;
+}
+
+.cell[data-number="5"] {
+    color: maroon;
+}
+
+.cell[data-number="6"] {
+    color: teal;
+}
+
+.cell[data-number="7"] {
+    color: black;
+}
+
+.cell[data-number="8"] {
+    color: gray;
+}

@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficultySelect = document.getElementById('difficulty');
     const startButton = document.getElementById('start');
     const grid = document.querySelector('.grid');
+    const messageElement = document.getElementById('message');
 
     let firstClick = true;
     let flaggedMines = 0;
     let revealedCells = 0;
     let mines;
 
-    // 難易度に応じた設定
     const difficulties = {
         beginner: {rows: 9, cols: 9, mines: 10},
         intermediate: {rows: 16, cols: 16, mines: 40},
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function startGame(difficulty) {
-        grid.innerHTML = ''; // グリッドをリセット
+        grid.innerHTML = '';
         grid.style.gridTemplateColumns = `repeat(${difficulty.cols}, 30px)`;
         grid.style.gridTemplateRows = `repeat(${difficulty.rows}, 30px)`;
 
@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         revealedCells = 0;
         mines = new Set();
 
-        // セルを生成してグリッドに追加
         for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
@@ -49,14 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const cell = grid.children[index];
             if (event.button === 0 && !cell.classList.contains('flagged')) {
                 if (mines.has(index)) {
-                    // 地雷をクリックした場合
                     cell.style.backgroundColor = 'red';
-                    alert('ゲームオーバー！');
+                    messageElement.textContent = 'ゲームオーバー！';
                     startGame(difficulty);
                 } else {
                     revealAdjacent(index, difficulty);
                 }
             } else if (event.button === 2) {
+                clearTimeout(longPressTimeout);
                 toggleFlag(cell, index);
             }
         }
@@ -77,9 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleFlag(cell, index) {
         if (cell.classList.contains('flagged')) {
             cell.classList.remove('flagged');
+            cell.textContent = '';
             if (mines.has(index)) flaggedMines--;
         } else {
             cell.classList.add('flagged');
+            cell.textContent = 'F';
             if (mines.has(index)) flaggedMines++;
         }
     }
@@ -88,13 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const cell = grid.children[index];
         if (cell.classList.contains('revealed') || cell.classList.contains('flagged')) return;
 
-        const adjacentMineCount = getAdjacentIndexes        (index, difficulty).filter((adjacentIndex) => mines.has(adjacentIndex)).length;
+        const adjacentMineCount = getAdjacentIndexes(index, difficulty).filter((adjacentIndex) => mines.has(adjacentIndex)).length;
 
         cell.classList.add('revealed');
         revealedCells++;
 
         if (adjacentMineCount > 0) {
             cell.textContent = adjacentMineCount;
+            cell.dataset.number = adjacentMineCount;
             cell.addEventListener('mousedown', (event) => {
                 if (event.button === 0) {
                     checkAutoReveal(index, difficulty);
@@ -116,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkWin(difficulty) {
-        if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines && flaggedMines === difficulty.mines) {
-            alert('おめでとうございます！勝利です！');
+        if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
+            messageElement.textContent = 'おめでとうございます！勝利です！';
             startGame(difficulty);
         }
     }
@@ -138,8 +140,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return adjacentIndexes;
     }
 
-    // 右クリックでメニューが表示されないようにする
+    // Prevent the context menu from appearing on right-click
     grid.addEventListener('contextmenu', (event) => {
         event.preventDefault();
+    });
+
+    // Enable flagging with a long press
+    let longPressTimeout;
+    grid.addEventListener('mousedown', (event) => {
+        if (event.button === 0) {
+            longPressTimeout = setTimeout(() => {
+                const cell = event.target;
+                const index = Array.prototype.indexOf.call(grid.children, cell);
+                toggleFlag(cell, index);
+            }, 150);
+        }
+    });
+
+    grid.addEventListener('mouseup', () => {
+        clearTimeout(longPressTimeout);
     });
 });
