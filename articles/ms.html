@@ -1,53 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>Minesweeper</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="ms.css">
+  <title>マインスイーパー</title>
 </head>
 <body>
-  <h1>Minesweeper</h1>
-  <div id="board"></div>
-  <script>
-    function init() {
-      // Create the board
-      var board = document.getElementById("board");
-      var cells = [];
-      for (var i = 0; i < 9; i++) {
-        for (var j = 0; j < 9; j++) {
-          cells.push(document.createElement("div"));
-          cells[i * 9 + j].className = "cell";
-          board.appendChild(cells[i * 9 + j]);
-        }
-      }
-      // Initialize the game state
-      var mines = 10;
-      var revealedCells = [];
-      for (var i = 0; i < 9 * 9; i++) {
-        cells[i].onclick = function() {
-          if (this.className == "mine") {
-            // Game over!
-          } else if (revealedCells.indexOf(this) == -1) {
-            // Reveal this cell and its neighbors
-            reveal(this);
-          }
-        };
-      }
-      // Start the game!
-      reveal(cells[Math.floor(Math.random() * 9 * 9)]);
-    }
-    function reveal(cell) {
-      // Reveal the cell
-      cell.className = "revealed";
-      // Reveal its neighbors
-      for (var i = -1; i <= 1; i++) {
-        for (var j = -1; j <= 1; j++) {
-          var neighbor = cell.parentNode.children[cell.cellIndex + i * 9 + j];
-          if (neighbor && neighbor.className != "mine" && neighbor.className != "revealed") {
-            reveal(neighbor);
-          }
-        }
-      }
-    }
-    window.onload = init;
-  </script>
+  <h1>マインスイーパー</h1>
+  <div id="settings">
+    <label for="difficulty">難易度:</label>
+    <select id="difficulty">
+      <option value="0">初級</option>
+      <option value="1">中級</option>
+      <option value="2">上級</option>
+      <option value="3">超人</option>
+    </select>
+    <button id="start">ゲーム開始</button>
+  </div>
+  <div id="game">
+    <div id="board"></div>
+  </div>
+  <script src="ms.js"></script>
 </body>
 </html>
