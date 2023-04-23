@@ -1,21 +1,21 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const difficulties = [
-      { rows: 9, cols: 9, mines: 10 },
-      { rows: 16, cols: 16, mines: 40 },
-      { rows: 30, cols: 16, mines: 99 },
-      { rows: 50, cols: 50, mines: 500 },
-    ];
+const levels = [
+    { rows: 9, cols: 9, mines: 10 },
+    { rows: 16, cols: 16, mines: 40 },
+    { rows: 30, cols: 16, mines: 99 },
+    { rows: 50, cols: 50, mines: 500 }
+  ];
   
-    const board = document.getElementById("board");
-    let cells;
-    let rows;
-    let cols;
+  document.querySelector("#start").addEventListener("click", () => {
+    const level = levels[document.querySelector("#difficulty").value];
+    startGame(level.rows, level.cols, level.mines);
+  });
   
-    document.getElementById("start").addEventListener("click", () => {
-      const diff = document.getElementById("difficulty").value;
-      startGame(difficulties[diff]);
-    });
+  function startGame(rows, cols, mines) {
+    const board = document.querySelector("#board");
+    const message = document.querySelector("h2");
+    message.textContent = "";
   
+<<<<<<< HEAD
     function startGame({ rows: r, cols: c, mines }) {
       showMessage("");
       rows = r;
@@ -57,6 +57,32 @@ document.addEventListener("DOMContentLoaded", () => {
           board.appendChild(el);
         }
       }      
+=======
+    board.innerHTML = "";
+    board.style.gridTemplateRows = `repeat(${rows}, 30px)`;
+    board.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+  
+    const cells = [];
+    for (let i = 0; i < rows * cols; i++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.addEventListener("click", () => revealCell(i));
+      cell.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        toggleFlag(i);
+      });
+      board.appendChild(cell);
+      cells.push({ isMine: false, isRevealed: false, isFlagged: false });
+    }
+  
+    for (let i = 0; i < mines; i++) {
+      let index;
+      do {
+        index = Math.floor(Math.random() * cells.length);
+      } while (cells[index].isMine);
+      cells[index].isMine = true;
+    }
+>>>>>>> parent of 6f1d076 (Update ms.js)
   
     function getCellIndex(row, col) {
       return row * cols + col;
@@ -67,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     function getNeighbors(index) {
+<<<<<<< HEAD
       const { row, col } = getCellRowCol(index);
       const neighbors = [];
       for (let r = row - 1; r <= row + 1; r++) {
@@ -128,26 +155,82 @@ document.addEventListener("DOMContentLoaded", () => {
           board.children[index].classList.add("mine");
           if (cell.isFlagged) {
             board.children[index].classList.add("correct-flag");
+=======
+        const { row, col } = getCellRowCol(index);
+        const neighbors = [];
+        for (let r = row - 1; r <= row + 1; r++) {
+          for (let c = col - 1; c <= col + 1; c++) {
+            if (r === row && c === col) continue;
+            if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+            neighbors.push(getCellIndex(r, c));
+>>>>>>> parent of 6f1d076 (Update ms.js)
           }
-        } else if (cell.isFlagged) {
-          board.children[index].classList.add("incorrect-flag");
         }
-      });
-      showMessage("ゲームオーバー");
-    }
-  
-    function showMessage(message) {
-      const messageEl = document.querySelector("h2");
-      messageEl.textContent = message;
-    }
-  
-    function checkForAutoReveal(index, minesAround) {
-      const neighbors = getNeighbors(index);
-      const flaggedNeighbors = neighbors.filter((neighbor) => cells[neighbor].isFlagged);
-      if (minesAround === flaggedNeighbors.length) {
-        const unflaggedNeighbors = neighbors.filter((neighbor) => !cells[neighbor].isFlagged);
-        unflaggedNeighbors.forEach((neighbor) => revealCell(neighbor, true));
+        return neighbors;
+      }
+    
+      function countMinesAround(index) {
+        return getNeighbors(index).reduce((count, neighbor) => count + (cells[neighbor].isMine ? 1 : 0), 0);
+      }
+    
+      function revealCell(index) {
+        if (cells[index].isRevealed || cells[index].isFlagged) return;
+        cells[index].isRevealed = true;
+        const cell = board.children[index];
+        cell.classList.add("uncovered");
+    
+        if (cells[index].isMine) {
+          cell.classList.add("mine");
+          gameOver();
+          return;
+        }
+    
+        const minesAround = countMinesAround(index);
+        if (minesAround > 0) {
+          cell.classList.add(`cell-${minesAround}`);
+          cell.textContent = minesAround;
+        } else {
+          getNeighbors(index).forEach(revealCell);
+        }
+    
+        if (checkVictory()) {
+          showMessage("勝利！おめでとうございます！");
+        }
+      }
+    
+      function toggleFlag(index) {
+        if (cells[index].isRevealed) return;
+        cells[index].isFlagged = !cells[index].isFlagged;
+        const cell = board.children[index];
+        cell.classList.toggle("flagged");
+        cell.textContent = cells[index].isFlagged ? "F" : "";
+      }
+    
+      function checkVictory() {
+        return cells.every(
+          (cell, index) =>
+            (cell.isFlagged && cell.isMine) || (!cell.isMine && cell.isRevealed)
+        );
+      }
+    
+      function gameOver() {
+        cells.forEach((cell, index) => {
+          if (cell.isMine) {
+            const el = board.children[index];
+            el.textContent = "●";
+          } else if (cell.isFlagged) {
+            const el = board.children[index];
+            el.classList.remove("flagged");
+            el.classList.add("false-flag");
+            el.textContent = "F";
+          }
+        });
+        showMessage("ゲームオーバー");
+      }
+    
+      function showMessage(msg) {
+        const message = document.querySelector("h2");
+        message.textContent = msg;
       }
     }
-  });
-    
+      
