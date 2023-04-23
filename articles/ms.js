@@ -125,36 +125,39 @@ const levels = [
       }
     
       function showMessage(msg) {
-        const message = document.querySelector("h2");
-        message.textContent = msg;
-      }
-    }
-    let timerId = null;
-    let startTime = null;
-    
-    function startTimer() {
-      if (timerId !== null) clearInterval(timerId);
-      startTime = Date.now();
-      timerId = setInterval(updateTimer, 1000);
-    }
-    
-    function updateTimer() {
-      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-      document.querySelector("#timer").textContent = elapsedTime;
-    }
-    
-    function stopTimer() {
-      if (timerId !== null) clearInterval(timerId);
-    }
-    
-    function resetTimer() {
-      stopTimer();
-      document.querySelector("#timer").textContent = "0";
-    }
-
-    function showMessage(msg) {
         stopTimer();
         const message = document.querySelector("h2");
-        message.textContent = msg + (msg === "勝利！おめでとうございます！" ? ` 経過時間: ${document.querySelector("#timer").textContent} 秒` : "");
-      }
+        message.textContent = msg + (msg === "勝利！おめでとうございます！" ? ` 経過時間: ${document.querySelector("#timer").textContent}` : "");
+      }      
+    }
+
+let timerId = null;
+let startTime = null;
+
+function startTimer() {
+  if (timerId !== null) clearInterval(timerId);
+  startTime = Date.now();
+  timerId = setInterval(updateTimer, 10);
+}
+
+function formatTime(elapsedTime) {
+  const minutes = Math.floor(elapsedTime / 6000);
+  const seconds = Math.floor((elapsedTime % 6000) / 100);
+  const centiseconds = elapsedTime % 100;
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centiseconds.toString().padStart(2, '0')}`;
+}
+
+function updateTimer() {
+  const elapsedTime = Math.floor((Date.now() - startTime) / 10);
+  document.querySelector("#timer").textContent = formatTime(elapsedTime);
+}
+
+function stopTimer() {
+  if (timerId !== null) clearInterval(timerId);
+}
+
+function resetTimer() {
+  stopTimer();
+  document.querySelector("#timer").textContent = "00:00.00";
+}
       
