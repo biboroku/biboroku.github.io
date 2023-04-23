@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ms.css">
+    <title>マインスイーパー</title>
+</head>
+<body>
+    <h1>マインスイーパー</h1>
+    <div class="settings">
+        <label for="difficulty">難易度:</label>
+        <select id="difficulty">
+            <option value="beginner">初級</option>
+            <option value="intermediate">中級</option>
+            <option value="advanced">上級</option>
+            <option value="expert">超人</option>
+        </select>
+        <button id="startBtn">ゲーム開始</button>
+    </div>
+    <div id="timer">00:00.00</div>
+    <div id="game"></div>
+    <h2 id="message"></h2>
+
+    <script src="ms.js"></script>
+</body>
+</html>
