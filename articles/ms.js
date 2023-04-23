@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficulties = {
         beginner: {rows: 9, cols: 9, mines: 10},
         intermediate: {rows: 16, cols: 16, mines: 40},
-        advanced: {rows: 30, cols: 16, mines: 99},
+        advanced: {rows: 16, cols: 30, mines: 99},
         superhuman: {rows: 50, cols: 50, mines: 500},
     };
 
