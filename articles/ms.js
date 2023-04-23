@@ -115,10 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     function toggleFlag(index) {
-      if (cells[index].isRevealed) return;
-      cells[index].isFlagged = !cells[index].isFlagged;
-      board.children[index].classList.toggle("flag");
-    }
+        if (cells[index].isRevealed) return;
+        cells[index].isFlagged = !cells[index].isFlagged;
+        const cell = board.children[index];
+        cell.classList.toggle("flag");
+        cell.textContent = cells[index].isFlagged ? "F" : "";
+      }      
   
     function checkVictory() {
       return cells.every((cell) => (cell.isMine && cell.isFlagged) || (!cell.isMine && cell.isRevealed));
