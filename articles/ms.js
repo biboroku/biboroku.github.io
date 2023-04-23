@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
             messageElement.textContent = 'GAME CLEAR';
             startGame(difficulty);
-            startGame(difficulty);
         }
     }
 
