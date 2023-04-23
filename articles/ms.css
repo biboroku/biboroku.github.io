@@ -24,9 +24,12 @@ body {
   
   #board {
     display: grid;
-    grid-auto-flow: row;
+    grid-template-columns: repeat(var(--board-width), 1fr);
+    grid-gap: 1px;
+    max-width: 80vw;
     margin: 0 auto;
   }
+  
   
   .cell {
     width: 30px;

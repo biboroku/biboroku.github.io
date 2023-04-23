@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cols = c;
       cells = createCells(rows, cols, mines);
       renderBoard(board, cells, rows, cols);
+      document.documentElement.style.setProperty("--board-width", width);
     }
   
     function createCells(rows, cols, mines) {
