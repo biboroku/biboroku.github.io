@@ -175,3 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
     });
 });
+
+const toggleInstructionsButton = document.getElementById('toggleInstructions');
+const instructions = document.getElementById('instructions');
+
+toggleInstructionsButton.addEventListener('click', () => {
+    if (instructions.style.display === 'none') {
+        instructions.style.display = 'block';
+    } else {
+        instructions.style.display = 'none';
+    }
+});
