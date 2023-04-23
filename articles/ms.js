@@ -43,22 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return cells;
     }
   
-    function renderBoard(board, cells, rows, cols) {
-      board.innerHTML = "";
-      board.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-      board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-      cells.forEach((cell, index) => {
-        const el = document.createElement("div");
-        el.classList.add("cell");
-        el.addEventListener("click", () => revealCell(index));
-        el.addEventListener("dblclick", () => checkForAutoReveal(index));
-        el.addEventListener("contextmenu", (e) => {
-          e.preventDefault();
-          toggleFlag(index);
-        });
-        board.appendChild(el);
-      });
-    }
+    function renderBoard() {
+        board.innerHTML = "";
+        for (let index = 0; index < cells.length; index++) {
+          const el = document.createElement("div");
+          el.className = "cell";
+          el.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            toggleFlag(index);
+          });
+          el.addEventListener("click", () => revealCell(index));
+          el.addEventListener("dblclick", () => checkForAutoReveal(index));
+          board.appendChild(el);
+        }
+      }      
   
     function getCellIndex(row, col) {
       return row * cols + col;
@@ -110,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (checkVictory()) {
           showMessage("勝利！おめでとうございます！");
         }
-      }               
+      }                   
   
     function toggleFlag(index) {
         if (cells[index].isRevealed) return;
