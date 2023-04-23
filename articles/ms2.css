@@ -1,49 +1,38 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+header {
     text-align: center;
 }
 
 .settings {
-    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
 }
 
-#timer {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+.grid {
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
-#game {
-    display: inline-block;
-    border-collapse: collapse;
-}
-
-.cell {
-    width: 25px;
-    height: 25px;
-    border: 1px solid #000;
+.grid .cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #999;
     text-align: center;
-    line-height: 25px;
-    user-select: none;
-    cursor: pointer;
+    line-height: 30px;
+    background-color: #ccc;
+    color: #333;
 }
 
-.cell[data-flag="true"] {
-    background-color: #f5f5f5;
+.grid .cell.revealed {
+    background-color: #ddd;
 }
 
-.cell[data-open="true"] {
-    background-color: #eee;
-}
-
-.cell[data-mine="true"]::after {
-    content: "●";
-}
-
-.cell[data-flag="true"]::after {
-    content: "F";
-}
-
-.cell[data-wrong="true"]::after {
-    content: "F";
-    text-decoration: line-through;
-}
+/* その他のスタイルや色の設定 */
