@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleFlag(index);
           });
           el.addEventListener("click", () => revealCell(index));
-          el.addEventListener("dblclick", () => checkForAutoReveal(index));
           board.appendChild(el);
         }
       }      
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (checkVictory()) {
           showMessage("勝利！おめでとうございます！");
         }
-      }                   
+      }                       
   
     function toggleFlag(index) {
         if (cells[index].isRevealed) return;
