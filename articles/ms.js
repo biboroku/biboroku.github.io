@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkWin(difficulty) {
         if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
-            messageElement.textContent = 'GAME CLEAR';
+            messageElement.textContent = 'GAME CLEAR<br>STARTボタンで再プレイ';
             startGame(difficulty);
         }
     }
