@@ -18,6 +18,8 @@ const levels = [
     board.innerHTML = "";
     board.style.gridTemplateRows = `repeat(${rows}, 30px)`;
     board.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+
+    resetTimer();
   
     const cells = [];
     for (let i = 0; i < rows * cols; i++) {
@@ -66,6 +68,7 @@ const levels = [
       }
     
       function revealCell(index) {
+        if (startTime === null) startTimer();
         if (cells[index].isRevealed || cells[index].isFlagged) return;
         cells[index].isRevealed = true;
         const cell = board.children[index];
@@ -106,6 +109,7 @@ const levels = [
       }
     
       function gameOver() {
+        stopTimer();
         cells.forEach((cell, index) => {
           if (cell.isMine) {
             const el = board.children[index];
@@ -125,4 +129,32 @@ const levels = [
         message.textContent = msg;
       }
     }
+    let timerId = null;
+    let startTime = null;
+    
+    function startTimer() {
+      if (timerId !== null) clearInterval(timerId);
+      startTime = Date.now();
+      timerId = setInterval(updateTimer, 1000);
+    }
+    
+    function updateTimer() {
+      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+      document.querySelector("#timer").textContent = elapsedTime;
+    }
+    
+    function stopTimer() {
+      if (timerId !== null) clearInterval(timerId);
+    }
+    
+    function resetTimer() {
+      stopTimer();
+      document.querySelector("#timer").textContent = "0";
+    }
+
+    function showMessage(msg) {
+        stopTimer();
+        const message = document.querySelector("h2");
+        message.textContent = msg + (msg === "勝利！おめでとうございます！" ? ` 経過時間: ${document.querySelector("#timer").textContent} 秒` : "");
+      }
       
