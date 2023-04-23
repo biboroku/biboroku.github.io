@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
             messageElement.textContent = 'GAME CLEAR';
             startGame(difficulty);
         }
+        if (win) {
+            clearInterval(timerInterval);
+            message.textContent = 'おめでとうございます！勝利です！';
+            setTimeout(startGame, 2000); // 2秒後にstartGame()を呼び出します
+          }
     }
 
     function getAdjacentIndexes(index, difficulty) {
