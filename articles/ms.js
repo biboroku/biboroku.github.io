@@ -85,34 +85,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     function revealCell(index, isChained) {
-      if (cells[index].isRevealed || cells[index].isFlagged) return;
-      cells[index].isRevealed = true;
-      const cell = board.children[index];
-      cell.classList.add("uncovered");
-  
-      if (cells[index].isMine) {
-        if (!isChained) {
-          cell.classList.add        ("mine");
-          gameOver();
+        if (cells[index].isRevealed || cells[index].isFlagged) return;
+        cells[index].isRevealed = true;
+        const cell = board.children[index];
+        cell.classList.add("uncovered");
+      
+        if (cells[index].isMine) {
+          if (!isChained) {
+            cell.classList.add("mine");
+            gameOver();
+          }
+          return;
         }
-        return;
-      }
-  
-      const minesAround = countMinesAround(index);
-      if (minesAround > 0) {
-        cell.classList.add(`cell-${minesAround}`);
-        cell.textContent = minesAround;
-        if (!isChained) {
-          checkForAutoReveal(index, minesAround);
+      
+        const minesAround = countMinesAround(index);
+        if (minesAround > 0) {
+          cell.classList.add(`cell-${minesAround}`);
+          cell.textContent = minesAround;
+        } else {
+          getNeighbors(index).forEach((neighbor) => revealCell(neighbor, true));
         }
-      } else {
-        getNeighbors(index).forEach((neighbor) => revealCell(neighbor, true));
-      }
-  
-      if (checkVictory()) {
-        showMessage("勝利！おめでとうございます！");
-      }
-    }
+      
+        checkForAutoReveal(index, minesAround);
+      
+        if (checkVictory()) {
+          showMessage("勝利！おめでとうございます！");
+        }
+      }      
   
     function toggleFlag(index) {
         if (cells[index].isRevealed) return;
