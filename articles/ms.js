@@ -12,6 +12,9 @@ const levels = [
   
   function startGame(rows, cols, mines) {
     const board = document.querySelector("#board");
+    const message = document.querySelector("h2");
+    message.textContent = "";
+  
     board.innerHTML = "";
     board.style.gridTemplateRows = `repeat(${rows}, 30px)`;
     board.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
@@ -46,58 +49,80 @@ const levels = [
     }
   
     function getNeighbors(index) {
-      const { row, col } = getCellRowCol(index);
-      const neighbors = [];
-      for (let r = row - 1; r <= row + 1; r++) {
-        for (let c = col - 1; c <= col + 1; c++) {
-          if (r === row && c === col) continue;
-          if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
-          neighbors.push(getCellIndex(r, c));
+        const { row, col } = getCellRowCol(index);
+        const neighbors = [];
+        for (let r = row - 1; r <= row + 1; r++) {
+          for (let c = col - 1; c <= col + 1; c++) {
+            if (r === row && c === col) continue;
+            if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+            neighbors.push(getCellIndex(r, c));
+          }
+        }
+        return neighbors;
+      }
+    
+      function countMinesAround(index) {
+        return getNeighbors(index).reduce((count, neighbor) => count + (cells[neighbor].isMine ? 1 : 0), 0);
+      }
+    
+      function revealCell(index) {
+        if (cells[index].isRevealed || cells[index].isFlagged) return;
+        cells[index].isRevealed = true;
+        const cell = board.children[index];
+        cell.classList.add("uncovered");
+    
+        if (cells[index].isMine) {
+          cell.classList.add("mine");
+          gameOver();
+          return;
+        }
+    
+        const minesAround = countMinesAround(index);
+        if (minesAround > 0) {
+          cell.classList.add(`cell-${minesAround}`);
+          cell.textContent = minesAround;
+        } else {
+          getNeighbors(index).forEach(revealCell);
+        }
+    
+        if (checkVictory()) {
+          showMessage("勝利！おめでとうございます！");
         }
       }
-      return neighbors;
-    }
-  
-    function countMinesAround(index) {
-      return getNeighbors(index).reduce((count, neighbor) => count + (cells[neighbor].isMine ? 1 : 0), 0);
-    }
-  
-    function revealCell(index) {
-      if (cells[index].isRevealed || cells[index].isFlagged) return;
-      cells[index].isRevealed = true;
-      const cell = board.children[index];
-      cell.classList.add("uncovered");
-  
-      if (cells[index].isMine) {
-        cell.classList.add("mine");
-        alert("ゲームオーバー");
-        return;
-      }
-  
-      const minesAround = countMinesAround(index);
-      if (minesAround > 0) {
-        cell.classList.add(`cell-${minesAround}`);
-        cell.textContent = minesAround;
-      } else {
-        getNeighbors(index).forEach(revealCell);
-      }
-    }
-  
-    function toggleFlag(index) {
+    
+      function toggleFlag(index) {
         if (cells[index].isRevealed) return;
         cells[index].isFlagged = !cells[index].isFlagged;
         const cell = board.children[index];
         cell.classList.toggle("flagged");
+        cell.textContent = cells[index].isFlagged ? "F" : "";
       }
     
       function checkVictory() {
-        let revealedCount = 0;
-        let flaggedCount = 0;
-        for (let i = 0; i < cells.length; i++) {
-          if (cells[i].isRevealed) revealedCount++;
-          if (cells[i].isFlagged) flaggedCount++;
-        }
-        return revealedCount + flaggedCount === rows * cols;
+        return cells.every(
+          (cell, index) =>
+            (cell.isFlagged && cell.isMine) || (!cell.isMine && cell.isRevealed)
+        );
+      }
+    
+      function gameOver() {
+        cells.forEach((cell, index) => {
+          if (cell.isMine) {
+            const el = board.children[index];
+            el.textContent = "●";
+          } else if (cell.isFlagged) {
+            const el = board.children[index];
+            el.classList.remove("flagged");
+            el.classList.add("false-flag");
+            el.textContent = "F";
+          }
+        });
+        showMessage("ゲームオーバー");
+      }
+    
+      function showMessage(msg) {
+        const message = document.querySelector("h2");
+        message.textContent = msg;
       }
     }
       
