@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (mines.has(index)) {
                     cell.style.backgroundColor = 'red';
                     revealMines(difficulty);
-                    messageElement.textContent = 'ゲームオーバー！';
+                    messageElement.textContent = 'GAME OVER!!!';
                     clearInterval(timerInterval);
                     startGame(difficulty);
                 } else {
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkWin(difficulty) {
         if (revealedCells === difficulty.rows * difficulty.cols - difficulty.mines) {
-            messageElement.textContent = 'おめでとうございます！勝利です！';
+            messageElement.textContent = 'GAME CLEAR';
             startGame(difficulty);
         }
     }
