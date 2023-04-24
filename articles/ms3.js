@@ -92,11 +92,109 @@ class Minesweeper {
     }
 
     revealCell(row, col) {
-        // ここにセルを開く処理を書く
+        if (this.firstClick) {
+            this.generateBoard(row, col);
+            this.firstClick = false;
+        }
+
+        let cell = this.cells[row][col];
+
+        if (cell.revealed || cell.flagged) {
+            return;
+        }
+
+        cell.revealed = true;
+        cell.element.classList.add('revealed');
+        this.revealedCells++;
+
+        if (cell.mined) {
+            cell.element.textContent = '💣';
+            this.gameOver(false);
+            return;
+        }
+
+        if (cell.adjacentMines > 0) {
+            cell.element.textContent = cell.adjacentMines;
+            if (cell.adjacentMines === this.getAdjacentFlags(row, col)) {
+                this.revealAdjacentCells(row, col);
+            }
+        } else {
+            this.revealAdjacentCells(row, col);
+        }
+
+        if (this.revealedCells === this.rows * this.cols - this.mines) {
+            this.gameOver(true);
+        }
+    }
+
+    getAdjacentFlags(row, col) {
+        let flags = 0;
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                let newRow = row + i;
+                let newCol = col + j;
+
+                if (
+                    newRow >= 0 &&
+                    newRow < this.rows &&
+                    newCol >= 0 &&
+                    newCol < this.cols &&
+                    this.cells[newRow][newCol].flagged
+                ) {
+                    flags++;
+                }
+            }
+        }
+        return flags;
+    }
+
+    revealAdjacentCells(row, col) {
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                let newRow = row + i;
+                let newCol = col + j;
+
+                if (
+                    newRow >= 0 &&
+                    newRow < this.rows &&
+                    newCol >= 0 &&
+                    newCol < this.cols
+                ) {
+                    this.revealCell(newRow, newCol);
+                }
+            }
+        }
     }
 
     toggleFlag(row, col) {
-        // ここにフラグを立てる処理を書く
+        let cell = this.cells[row][col];
+
+        if (cell.revealed) {
+            return;
+        }
+
+        cell.flagged = !cell.flagged;
+        cell.element.textContent = cell.flagged ? '🚩' : '';
+    }
+
+    gameOver(win) {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                let cell = this.cells[i][j];
+
+                if (cell.mined && !cell.flagged) {
+                    cell.element.textContent = '💣';
+                }
+
+                cell.element.classList.add('revealed');
+                cell.revealed = true;
+            }
+        }
+
+        setTimeout(() => {
+            alert(win ? 'おめでとう！勝ちました！' : '残念！負けました！');
+            this.startGame();
+        }, 100);
     }
 }
 
