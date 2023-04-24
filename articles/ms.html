@@ -7,32 +7,32 @@
     <link rel="stylesheet" href="ms.css">
 </head>
 <body>
-    <header>
-        <h1>自作マインスイーパー(β)</h1>
-    </header>
-    <main>
+    <div id="minesweeper">
+        <h1>マインスイーパー(δ)</h1>
         <div class="settings">
             <select id="difficulty">
-                <option value="beginner">初級</option>
-                <option value="intermediate">中級</option>
-                <option value="advanced">上級</option>
-                <option value="superhuman">超人</option>
+                <option value="0">初級</option>
+                <option value="1">中級</option>
+                <option value="2">上級</option>
+                <option value="3">超上級</option>
+                <option value="4">超超上級</option>
             </select>
-            <button id="start">START</button>
+            <button id="start">ゲーム開始</button>
         </div>
-        <div class="grid"></div>
+        <div id="gameBoard"></div>
         <h2 id="message"></h2>
-        <h2 id="timer">00:00.00</h2>
-    </main>
+        <h2><span id="timer">0:00.00</span><br>
+            残り地雷数:<span id="remaining-mines">0</span></h2>
+    </div>
     <div style="text-align: center;">
         <button id="toggleInstructions">説明を表示/非表示</button>
         <div id="instructions" style="display: none;">
             <p>
-                <strong>マインスイーパー</strong>は、地雷を避けながら盤面の全てのセルを開くパズルゲームです。ゲームの目的は、<strong>地雷のないセル</strong>をすべて開くことです。<br>
+                <strong>マインスイーパー</strong>は、地雷を避けながら盤面の全てのセルを開くパズルゲームです。ゲームの目的は、地雷のないセルをすべて開くことです。<br>
                 <br>
-                右クリックでセルにフラグを立てることができます。フラグは、あなたが地雷があると思われる場所に立てることができます。<br>
+                右クリックでセルに<strong>フラグ</strong>を立てることができます。フラグは、あなたが地雷があると思われる場所に立てることができます。フラグを立てたセルには"F"の印が付きます。フラグを立てたセルは誤って開けることがないよう、ロックされます。フラグはもう一度右クリックすることで解除できます<br>
                 <br>
-                それぞれのセルには、隣接する8つのセルの中にある地雷の数が表示されます。数字が表示されているセルを左クリックして、その数字と同じ数の<em>フラグ</em>が立てられた隣接セルがあれば、残りのセルが自動的に開きます。<br>
+                それぞれの開けられたセルには、隣接する8つのセルの中にある地雷の数が表示されます(0の場合は何も表示されません)。数字が表示されているセルを左クリックして、その数字と同じ数のフラグが立てられた隣接セルがあれば、残りのセルが自動的に開きます。<br>
                 <br>
                 ゲームは4つの難易度で遊ぶことができます。初級、中級、上級、超人のそれぞれのレベルには、異なる盤面サイズと地雷の数があります。<br>
                 <table border="1" align="center">
@@ -56,25 +56,28 @@
                     </tr>
                     <tr>
                       <td>上級</td>
-                      <td>30</td>
                       <td>16</td>
+                      <td>30</td>
                       <td>99</td>
                     </tr>
                     <tr>
-                      <td>超人</td>
+                      <td>超上級</td>
                       <td>50</td>
                       <td>50</td>
                       <td>500</td>
                     </tr>
+                    <tr>
+                      <td>超超上級</td>
+                      <td>100</td>
+                      <td>100</td>
+                      <td>2000</td>
+                    </tr>
                   </table><br>
                 <br>
-                ゲームを開始するには、難易度を選択して「START」ボタンをクリックしてください。最初に開くセルは必ず地雷がなく、その隣接セルにも地雷がありません。ゲームが終了すると、タイマーが停止し、勝利または敗北のメッセージが表示されます。盤面をリセットするには、再度「START」ボタンをクリックしてください。<br>
-                <br>
-                既知のバグは、ゲーム勝利時に自動的に盤面がリセットされないこと、数字を押して開くときに、爆弾の有無の確認ができないこと(数字が合わなくなるのはこれが原因と見られる)です。
+                ゲームを開始するには、難易度を選択して「ゲーム開始」ボタンをクリックしてください。最初に開くセルは必ず地雷がないようにプログラムされています。盤面をリセットするには、再度「ゲーム開始」ボタンをクリックしてください。
             </p>          
         </div>
     </div>
     <script src="ms.js"></script>
-    <p><a href="../index.html">ホーム</a></p>
 </body>
 </html>
