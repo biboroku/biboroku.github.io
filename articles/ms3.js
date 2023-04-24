@@ -1,184 +1,179 @@
-class Minesweeper {
-    constructor(rows, cols, mines) {
-      this.rows = rows;
-      this.cols = cols;
-      this.mines = mines;
-      this.flags = 0;
-      this.board = [];
-      this.createBoard();
+class Tile {
+    constructor(row, col) {
+      this.row = row;
+      this.col = col;
+      this.isMine = false;
+      this.isRevealed = false;
+      this.isFlagged = false;
+      this.adjacentMines = 0;
+    }
+  }
+  
+  function createBoard(rows, cols, mines) {
+    const board = [];
+    for (let row = 0; row < rows; row++) {
+      const rowData = [];
+      for (let col = 0; col < cols; col++) {
+        rowData.push(new Tile(row, col));
+      }
+      board.push(rowData);
     }
   
-    createBoard() {
-      // Initialize cells
-      for (let i = 0; i < this.rows; i++) {
-        const row = [];
-        for (let j = 0; j < this.cols; j++) {
-          row.push({ mine: false, adjacent: 0, open: false, flag: false });
-        }
-        this.board.push(row);
+    // Place mines
+    let remainingMines = mines;
+    while (remainingMines > 0) {
+      const row = Math.floor(Math.random() * rows);
+      const col = Math.floor(Math.random() * cols);
+      if (!board[row][col].isMine) {
+        board[row][col].isMine = true;
+        remainingMines--;
       }
+    }
   
-      // Place mines
-      let placedMines = 0;
-      while (placedMines < this.mines) {
-        const x = Math.floor(Math.random() * this.rows);
-        const y = Math.floor(Math.random() * this.cols);
+    // Calculate adjacent mines for each tile
+    const directions = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1], [1, 0], [1, 1]
+    ];
   
-        if (!this.board[x][y].mine) {
-          this.board[x][y].mine = true;
-          placedMines++;
-        }
-      }
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const tile = board[row][col];
+        if (tile.isMine) continue;
   
-      // Calculate adjacent mine counts
-      for (let x = 0; x < this.rows; x++) {
-        for (let y = 0; y < this.cols; y++) {
-          if (!this.board[x][y].mine) {
-            const adjacentMines = this.getAdjacentCells(x, y).filter((cell) => cell.mine).length;
-            this.board[x][y].adjacent = adjacentMines;
+        directions.forEach(([dRow, dCol]) => {
+          const newRow = row + dRow;
+          const newCol = col + dCol;
+          if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+            if (board[newRow][newCol].isMine) {
+              tile.adjacentMines++;
+            }
           }
-        }
-      }
-    }
-  
-    getAdjacentCells(x, y) {
-      const adjacentCells = [];
-  
-      for (let xOffset = -1; xOffset <= 1; xOffset++) {
-        for (let yOffset = -1; yOffset <= 1; yOffset++) {
-          if (xOffset === 0 && yOffset === 0) continue;
-          const newX = x + xOffset;
-          const newY = y + yOffset;
-  
-          if (newX >= 0 && newX < this.rows && newY >= 0 && newY < this.cols) {
-            adjacentCells.push(this.board[newX][newY]);
-          }
-        }
-      }
-  
-      return adjacentCells;
-    }
-  
-    openCell(x, y) {
-      const cell = this.board[x][y];
-  
-      if (cell.open || cell.flag) return false;
-  
-      cell.open = true;
-  
-      if (cell.mine) {
-        return true;
-      }
-  
-      if (cell.adjacent === 0) {
-        this.getAdjacentCells(x, y).forEach((adjacentCell) => {
-          const newX = adjacentCell.x;
-          const newY = adjacentCell.y;
-          this.openCell(newX, newY);
         });
       }
-  
-      return false;
     }
   
-    toggleFlag(x, y) {
-      const cell = this.board[x][y];
+    return board;
+  }
   
-      if (cell.open) return;
+  function revealTile(tile, board) {
+    if (tile.isRevealed || tile.isFlagged) return;
+    tile.isRevealed = true;
   
-      cell.flag = !cell.flag;
-      if (cell.flag) {
-        this.flags++;
-      } else {
-        this.flags--;
-      }
+    if (tile.adjacentMines === 0) {
+      const directions = [
+        [-1, -1], [-1, 0], [-1, 1],
+        [0, -1],           [0, 1],
+        [1, -1], [1, 0], [1, 1]
+      ];
+  
+      directions.forEach(([dRow, dCol]) => {
+        const newRow = tile.row + dRow;
+        const newCol = tile.col + dCol;
+        if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length) {
+          revealTile(board[newRow][newCol], board);
+        }
+      });
     }
+  }
   
-    isGameOver() {
-      for (let x = 0; x < this.rows; x++) {
-        for (let y = 0; y < this.cols; y++) {
-          const cell = this.board[x][y];
-          if (cell.mine && cell.open) return true;
+  function revealAdjacentTiles(tile, board) {
+    const directions = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1], [1, 0], [1, 1]
+    ];
+  
+    let flaggedTiles = 0;
+    directions.forEach(([dRow, dCol]) => {
+      const newRow = tile.row + dRow;
+      const newCol = tile.col + dCol;
+      if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board [0].length) {
+        const adjacentTile = board[newRow][newCol];
+        if (adjacentTile.isFlagged) {
+          flaggedTiles++;
         }
       }
-      return false;
-    }
+    });
   
-    isGameWon() {
-      let unopenedCells = 0;
-      for (let x = 0; x < this.rows; x++) {
-        for (let y = 0; y < this.cols; y++) {
-            const cell = this.board[x][y];
-            if (!cell.open) unopenedCells++;
+    if (flaggedTiles === tile.adjacentMines) {
+      directions.forEach(([dRow, dCol]) => {
+        const newRow = tile.row + dRow;
+        const newCol = tile.col + dCol;
+        if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length) {
+          revealTile(board[newRow][newCol], board);
+        }
+      });
+    }
+  }
+  
+  function renderBoard(board) {
+    gameBoard.innerHTML = "";
+    gameBoard.style.width = `${board[0].length * 30}px`;
+  
+    for (const row of board) {
+      for (const tile of row) {
+        const tileElement = document.createElement('div');
+        tileElement.className = 'tile';
+        tileElement.addEventListener('click', (event) => {
+          if (tile.isFlagged) return;
+          revealTile(tile, board);
+          if (tile.isMine) {
+            alert('ゲームオーバー！');
+            renderBoard(board);
+          } else {
+            renderBoard(board);
+            if (isGameWon(board)) {
+              alert('勝利！');
+            }
+          }
+        });
+  
+        tileElement.addEventListener('contextmenu', (event) => {
+          event.preventDefault();
+          if (tile.isRevealed) {
+            revealAdjacentTiles(tile, board);
+            renderBoard(board);
+            if (isGameWon(board)) {
+              alert('勝利！');
+            }
+          } else {
+            tile.isFlagged = !tile.isFlagged;
+            renderBoard(board);
+          }
+        });
+  
+        if (tile.isRevealed) {
+          tileElement.classList.add('revealed');
+          if (tile.adjacentMines > 0) {
+            tileElement.textContent = tile.adjacentMines;
+          }
+        } else {
+          if (tile.isFlagged) {
+            tileElement.classList.add('flagged');
           }
         }
-        return unopenedCells === this.mines;
+  
+        gameBoard.appendChild(tileElement);
       }
     }
-    
-    const gameContainer = document.getElementById("game-container");
-    const startButton = document.getElementById("start");
-    const difficultySelect = document.getElementById("difficulty");
-    
-    const difficulties = [
-      { rows: 9, cols: 9, mines: 10 },
-      { rows: 16, cols: 16, mines: 40 },
-      { rows: 30, cols: 16, mines: 99 },
-      { rows: 50, cols: 50, mines: 500 },
-      { rows: 100, cols: 100, mines: 2000 },
-    ];
-    
-    let game;
-    
-    function createGame(difficulty) {
-      game = new Minesweeper(difficulty.rows, difficulty.cols, difficulty.mines);
-      renderGame();
-    }
-    
-    function renderGame() {
-      gameContainer.innerHTML = "";
-      const table = document.createElement("table");
-      table.classList.add("game-board");
-    
-      for (let x = 0; x < game.rows; x++) {
-        const row = document.createElement("tr");
-        for (let y = 0; y < game.cols; y++) {
-          const cell = game.board[x][y];
-          const cellElement = document.createElement("td");
-          cellElement.classList.add("cell");
-          cellElement.dataset.open = cell.open;
-          cellElement.dataset.mine = cell.mine;
-          cellElement.dataset.adjacent = cell.adjacent;
-          cellElement.dataset.flag = cell.flag;
-    
-          cellElement.addEventListener("click", () => {
-            game.openCell(x, y);
-            if (game.isGameOver()) {
-              alert("ゲームオーバー");
-            } else if (game.isGameWon()) {
-              alert("おめでとう！勝利です！");
-            }
-            renderGame();
-          });
-    
-          cellElement.addEventListener("contextmenu", (event) => {
-            event.preventDefault();
-            game.toggleFlag(x, y);
-            renderGame();
-          });
-    
-          row.appendChild(cellElement);
+  }
+  
+  function isGameWon(board) {
+    for (const row of board) {
+      for (const tile of row) {
+        if (!tile.isMine && !tile.isRevealed) {
+          return false;
         }
-        table.appendChild(row);
       }
-    
-      gameContainer.appendChild(table);
     }
-    
-    startButton.addEventListener("click", () => {
-      const difficulty = difficulties[difficultySelect.value];
-      createGame(difficulty);
-    });
-    
-    createGame(difficulties[0]);
-    
+    return true;
+  }
+  
+  function startGame({ rows, cols, mines }) {
+    const board = createBoard(rows, cols, mines);
+    renderBoard(board);
+  }
+  
+  
