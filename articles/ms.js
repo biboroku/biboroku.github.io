@@ -224,7 +224,6 @@ class Minesweeper {
 
         clearInterval(this.timerInterval);
         this.message.innerHTML = win ? '<font color="blue">GAME CLEAR!!!<font>' : '<font color="red">GAME OVER!!!<font>';
-        this.remainingMines.textContent = '';
         /*自動ゲームリセット
         setTimeout(() => {
             this.startGame();
