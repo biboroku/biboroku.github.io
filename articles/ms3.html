@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マインスイーパー</title>
+  <link rel="stylesheet" href="ms3.css">
+</head>
+<body>
+  <header>
+    <h1>マインスイーパー</h1>
+  </header>
+  <section>
+    <label for="difficulty">難易度を選択してください：</label>
+    <select id="difficulty">
+      <option value="0">初級(9*9/地雷10個)</option>
+      <option value="1">中級(16*16/地雷40個)</option>
+      <option value="2">上級(30*16/地雷99個)</option>
+      <option value="3">超上級(50*50/地雷500個)</option>
+      <option value="4">超超上級(100*100/地雷2000個)</option>
+    </select>
+    <button id="start">ゲーム開始</button>
+  </section>
+  <section id="game-container">
+  </section>
+  <script src="ms3.js"></script>
+</body>
+</html>
