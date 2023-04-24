@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マインスイーパー</title>
-  <link rel="stylesheet" href="ms3.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マインスイーパー</title>
+    <link rel="stylesheet" href="ms3.css">
 </head>
 <body>
-  <h1>マインスイーパー</h1>
-  <div class="settings">
-    <select id="difficulty">
-      <option value="0">初級</option>
-      <option value="1">中級</option>
-      <option value="2">上級</option>
-      <option value="3">超上級</option>
-      <option value="4">超超上級</option>
-    </select>
-    <button id="startGame">ゲーム開始</button>
-  </div>
-  <div class="gameBoard"></div>
-  <script src="ms3.js"></script>
+    <h1>マインスイーパー</h1>
+    <div class="settings">
+        <label for="difficulty">難易度:</label>
+        <select id="difficulty">
+            <option value="0">初級</option>
+            <option value="1">中級</option>
+            <option value="2">上級</option>
+            <option value="3">超上級</option>
+            <option value="4">超超上級</option>
+        </select>
+        <button id="start">ゲーム開始</button>
+    </div>
+    <div id="gameBoard"></div>
+    <script src="ms3.js"></script>
 </body>
 </html>
