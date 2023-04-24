@@ -7,19 +7,24 @@
     <link rel="stylesheet" href="ms3.css">
 </head>
 <body>
-    <h1>マインスイーパー</h1>
-    <div class="settings">
-        <label for="difficulty">難易度:</label>
-        <select id="difficulty">
-            <option value="0">初級</option>
-            <option value="1">中級</option>
-            <option value="2">上級</option>
-            <option value="3">超上級</option>
-            <option value="4">超超上級</option>
-        </select>
-        <button id="start">ゲーム開始</button>
+    <div id="minesweeper">
+        <h1>マインスイーパー(δ)</h1>
+        <div class="settings">
+            <label for="difficulty">難易度:</label>
+            <select id="difficulty">
+                <option value="0">初級</option>
+                <option value="1">中級</option>
+                <option value="2">上級</option>
+                <option value="3">超上級</option>
+                <option value="4">超超上級</option>
+            </select>
+            <button id="start">ゲーム開始</button>
+        </div>
+        <div id="gameBoard"></div>
+        <h2>タイマー: <span id="timer">0:00.00</span><br>
+            残り地雷数: <span id="remaining-mines">0</span></h2>
     </div>
-    <div id="gameBoard"></div>
+    <h2 id="message"></h2>
     <script src="ms3.js"></script>
 </body>
 </html>

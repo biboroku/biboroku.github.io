@@ -14,6 +14,9 @@ class Minesweeper {
         this.startButton.addEventListener("click", () => {
             this.startGame();
         });
+        this.message = document.getElementById('message');
+        this.timer = document.getElementById('timer');
+        this.remainingMines = document.getElementById('remaining-mines');
     }
 
     startGame() {
@@ -21,6 +24,11 @@ class Minesweeper {
         this.board.style.width = `${this.difficulties[this.difficultySelector.value].cols * 32}px`;
         this.generateEmptyBoard();
         this.firstClick = true;
+        this.message.textContent = '';
+        this.remainingMines.textContent = this.mines;
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+        this.timer.textContent = '0:00.00';
     }
 
     generateEmptyBoard() {
@@ -115,9 +123,12 @@ class Minesweeper {
 
         if (cell.adjacentMines > 0) {
             cell.element.textContent = cell.adjacentMines;
-            if (cell.adjacentMines === this.getAdjacentFlags(row, col)) {
-                this.revealAdjacentCells(row, col);
-            }
+            cell.element.classList.add(`adjacent-${cell.adjacentMines}`);
+            cell.element.addEventListener('click', () => {
+                if (cell.adjacentMines === this.getAdjacentFlags(row, col)) {
+                    this.revealAdjacentCells(row, col);
+                }
+            });
         } else {
             this.revealAdjacentCells(row, col);
         }
@@ -174,7 +185,13 @@ class Minesweeper {
         }
 
         cell.flagged = !cell.flagged;
-        cell.element.textContent = cell.flagged ? '🚩' : '';
+        cell.element.innerHTML = cell.flagged ? '<strong>F</strong>' : '';
+
+        if (cell.flagged) {
+            this.remainingMines.textContent--;
+        } else {
+            this.remainingMines.textContent++;
+        }
     }
 
     gameOver(win) {
@@ -186,18 +203,34 @@ class Minesweeper {
                     cell.element.textContent = '💣';
                 }
 
+                if (!cell.mined && cell.flagged) {
+                    cell.element.textContent = '×';
+                }
+
                 cell.element.classList.add('revealed');
                 cell.revealed = true;
             }
         }
 
+        clearInterval(this.timerInterval);
+        this.message.textContent = win ? 'おめでとう！勝ちました！' : '残念！負けました！';
+        this.remainingMines.textContent = '';
         setTimeout(() => {
-            alert(win ? 'おめでとう！勝ちました！' : '残念！負けました！');
             this.startGame();
-        }, 100);
+        }, 2000);
     }
 }
 
 window.onload = () => {
     let game = new Minesweeper();
+    game.boardElement.addEventListener('mousedown', () => {
+        if (!game.timerInterval) {
+            game.timerInterval = setInterval(() => {
+                let elapsedTime = Date.now() - game.startTime;
+                let minutes = Math.floor(elapsedTime / 60000);
+                let seconds = ((elapsedTime % 60000) / 1000).toFixed(2);
+                game.timer.textContent = `${minutes}:${seconds}`;
+            }, 10);
+        }
+    });
 };

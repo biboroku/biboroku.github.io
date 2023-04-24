@@ -1,3 +1,10 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -27,17 +34,66 @@ h1 {
 .cell {
     width: 30px;
     height: 30px;
-    border: 1px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    line-height: 30px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    border: 1px solid #999;
+    background-color: rgb(128, 128, 128);
     cursor: pointer;
 }
 
 .cell.revealed {
-    background-color: #ccc;
+    background-color: rgb(204, 204, 204);
+    cursor: default;
 }
 
 .cell.flagged {
     background-color: #ffeb3b;
+}
+
+
+.cell.revealed {
+    background-color: #ddd;
+    cursor: default;
+}
+
+.cell.revealed.adjacent-1 {
+    color: blue;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-2 {
+    color: green;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-3 {
+    color: red;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-4 {
+    color: darkblue;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-5 {
+    color: darkred;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-6 {
+    color: teal;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-7 {
+    color: black;
+    font-weight: bold;
+}
+
+.cell.revealed.adjacent-8 {
+    color: gray;
+    font-weight: bold;
 }
