@@ -100,6 +100,16 @@ class Minesweeper {
     }
 
     revealCell(row, col) {
+        if (!this.timerInterval) {
+            this.startTime = Date.now();
+            this.timerInterval = setInterval(() => {
+                let elapsedTime = Date.now() - this.startTime;
+                let minutes = Math.floor(elapsedTime / 60000);
+                let seconds = ((elapsedTime % 60000) / 1000).toFixed(2);
+                this.timer.textContent = `${minutes}:${seconds}`;
+            }, 10);
+        }
+
         if (this.firstClick) {
             this.generateBoard(row, col);
             this.firstClick = false;
@@ -223,14 +233,4 @@ class Minesweeper {
 
 window.onload = () => {
     let game = new Minesweeper();
-    game.boardElement.addEventListener('mousedown', () => {
-        if (!game.timerInterval) {
-            game.timerInterval = setInterval(() => {
-                let elapsedTime = Date.now() - game.startTime;
-                let minutes = Math.floor(elapsedTime / 60000);
-                let seconds = ((elapsedTime % 60000) / 1000).toFixed(2);
-                game.timer.textContent = `${minutes}:${seconds}`;
-            }, 10);
-        }
-    });
 };
