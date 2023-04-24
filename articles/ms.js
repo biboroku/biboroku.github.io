@@ -51,13 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             startTime = performance.now();
             timerInterval = setInterval(updateTimer, 10);
+            timerElement.textContent = '00:00.00';
         } else {
             const cell = grid.children[index];
             if (event.button === 0 && !cell.classList.contains('flagged') && !cell.classList.contains('revealed')) {
                 if (mines.has(index)) {
                     cell.style.backgroundColor = 'red';
                     revealMines(difficulty);
-                    messageElement.textContent = 'ゲームオーバー！';
+                    messageElement.innerHTML = '<font color="red">GAME OVER!!!<font>';
                     clearInterval(timerInterval);
                     startGame(difficulty);
                 } else {
@@ -101,40 +102,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function revealMines(difficulty) {
-        for (const mine of mines) {
-            const cell = grid.children[mine];
-            if (!cell.classList.contains('revealed')) {
+        for (let i = 0; i < difficulty.rows * difficulty.cols; i++) {
+            const cell = grid.children[i];
+            if (mines.has(i)) {
                 cell.textContent = '●';
-                cell.style.color = 'black';
-                cell.style.fontWeight = 'bold';
+                cell.style.color = 'red';
+            } else if (cell.classList.contains('flagged')) {
+                cell.style.textDecoration = 'line-through';
             }
         }
     }
 
     function revealAdjacent(index, difficulty) {
-        const stack = [index];
-        while (stack.length > 0) {
-            const current = stack.pop();
-            const cell = grid.children[current];
-            if (!cell.classList.contains('revealed')) {
-                cell.classList.add('revealed');
-                revealedCells++;
-    
-                const adjacentMines = countAdjacentMines(current, difficulty);
-                if (adjacentMines > 0) {
-                    cell.textContent = adjacentMines;
-                    cell.style.color = numberColors[adjacentMines - 1];
-                    cell.style.fontWeight = 'bold';
-                } else {
-                    const adjacentCells = getAdjacentCells(current, difficulty);
-                    for (const adjacent of adjacentCells) {
-                        if (!mines.has(adjacent)) {
-                            stack.push(adjacent);
-                        }
-                    }
+        const cell = grid.children[index];
+        if (cell.classList.contains('revealed') || cell.classList.contains('flagged')) return;
+
+        const adjacentMineCount = getAdjacentIndexes(index, difficulty).filter((adjacentIndex) => mines.has(adjacentIndex)).length;
+
+        cell.classList.add('revealed');
+        revealedCells++;
+
+        if (adjacentMineCount > 0) {
+            cell.textContent = adjacentMineCount;
+            cell.dataset.number = adjacentMineCount;
+            cell.addEventListener('mousedown', (event) => {
+                if (event.button === 0) {
+                    checkAutoReveal(index, difficulty);
                 }
-            }
+            });
+        } else {
+            getAdjacentIndexes(index, difficulty).forEach((adjacentIndex) => revealAdjacent(adjacentIndex, difficulty));
         }
+
+        checkWin(difficulty);
     }
 
     function checkAutoReveal(index, difficulty) {
