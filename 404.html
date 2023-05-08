@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - エラーが発生しました！</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #F0F0F0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: #FFFFFF;
+            padding: 3rem;
+            border-radius: 5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .error-title {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #FF4136;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            animation: shake 0.3s linear infinite alternate;
+        }
+        .error-subtitle {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .back-link {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #0074D9;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #001F3F;
+        }
+        @keyframes shake {
+            0% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="error-title">404</h1>
+        <h2 class="error-subtitle">おっと！エラーが発生しました！</h2>
+        <p class="error-message">インターネットの海を彷徨って、途中で迷子になったようです。どうやらこのページは存在しないようです。</p>
+        <a href="/" class="back-link">ホームページに戻る</a>
+    </div>
+</body>
+</html>
