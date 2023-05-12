@@ -26,7 +26,7 @@
     margin: 10px;
     padding: 0;
   }
-.minmin { font-family: 'Noto Sans JP', sans-serif; 
+.minmin { font-family: 'メイリオ', 'Meiryo', 'Noto Sans JP', sans-serif; 
           font-size: 140%;
           text-indent: 0%;
         }
@@ -75,7 +75,8 @@ h1:after {
 }
 
 hr {
-  border-top: 3px double #ccc;
+	border:0;
+	border-bottom:1px dashed #999;
 }
 
 ul {
@@ -120,4 +121,24 @@ h2 {
 
 .topIcon:hover {
   opacity       : 0.9;   /* カーソル時透明度 */
+}
+
+.button {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 12px 12px;   /* 余白       */
+  background    : #000066;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
+  border        : 2px solid #000066;    /* 枠の指定 */
+}
+.button:hover {
+  box-shadow    : none;        /* カーソル時の影消去 */
+  color         : #000066;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
 }
